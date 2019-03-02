@@ -32,3 +32,9 @@ RUN mkdir build && \
     cmake .. && \
     make -j4
 
+WORKDIR /root/librealsense/build/
+
+RUN make install
+
+RUN apt-get update && apt-get -y install \
+    ros-kinetic-rgbd-launch
