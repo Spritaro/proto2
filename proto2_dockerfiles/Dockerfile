@@ -36,12 +36,11 @@ RUN unzip v2.18.0.zip && \
 WORKDIR /root/librealsense-2.18.0/
 RUN mkdir build && \
     cd build && \
-    cmake .. -DFORCE_LIBUVC=true && \
+    cmake .. && \
     make -j4 && \
     make install
 
 CMD udevadm control --reload-rules && udevadm trigger && \
     source /root/catkin_ws/devel/setup.bash && \
     catkin_make && \
-    source /root/catkin_ws/devel/setup.bash && \
-    roslaunch realsense2_camera rs_rgbd.launch
+    source /root/catkin_ws/devel/setup.bash
