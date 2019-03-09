@@ -1,10 +1,9 @@
 FROM ros:kinetic
 
-# SHELL ["/bin/bash", "-C"]
-
+ENV ROS_DISTRO kinetic
 RUN apt-get update && apt-get -y install \
-    ros-kinetic-desktop \
-    ros-kinetic-rgbd-launch
+    ros-${ROS_DISTRO}-desktop \
+    ros-${ROS_DISTRO}-rgbd-launch
 
 RUN apt-get update && apt-get -y install \
     git \
@@ -16,24 +15,21 @@ RUN apt-get update && apt-get -y install \
     cmake \
     udev \
     nano \
-    kmod
-
-RUN apt-get update && apt-get -y install \
+    kmod \
     wget \
     zip \
-    unzip
+    unzip \
+    usbutils
 
+ENV LIBREALSENSE_VERSION 2.18.0
 WORKDIR /root/
-#RUN git clone https://github.com/IntelRealSense/librealsense.git
-RUN wget https://github.com/intelRealSense/librealsense/archive/v2.18.0.zip
-
-WORKDIR /root/
-RUN unzip v2.18.0.zip && \
-    cd librealsense-2.18.0 && \
+RUN wget https://github.com/intelRealSense/librealsense/archive/v${LIBREALSENSE_VERSION}.zip
+RUN unzip v${LIBREALSENSE_VERSION}.zip && \
+    rm v${LIBREALSENSE_VERSION}.zip && \
+    cd librealsense-${LIBREALSENSE_VERSION} && \
     mkdir -p /etc/udev/rules.d && \
-    cp config/99-realsense-libusb.rules /etc/udev/rules.d/
-
-WORKDIR /root/librealsense-2.18.0/
+    cp config/99-realsense-libusb.rules /etc/udev/rules.d
+WORKDIR /root/librealsense-${LIBREALSENSE_VERSION}
 RUN mkdir build && \
     cd build && \
     cmake .. && \
@@ -41,6 +37,6 @@ RUN mkdir build && \
     make install
 
 CMD udevadm control --reload-rules && udevadm trigger && \
-    source /root/catkin_ws/devel/setup.bash && \
-    catkin_make && \
-    source /root/catkin_ws/devel/setup.bash
+    /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash ; \
+                  catkin_make ; \
+                  source /root/catkin_ws/devel/setup.bash ;"
