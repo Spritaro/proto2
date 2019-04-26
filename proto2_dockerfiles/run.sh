@@ -9,5 +9,8 @@ docker run \
     --env="DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-    test-realsense \
+    ros-cpp-2.21.0-2.2.3 \
     bash
+    #--net host \
+    #-e DISPLAY="DISPLAY" \
+    #-v $HOME/.Xauthority:/root/.Xauthority \
