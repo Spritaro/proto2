@@ -1,9 +1,6 @@
 FROM ros:kinetic
 
 ENV ROS_DISTRO kinetic
-#ENV LIBREALSENSE_VERSION 2.21.0
-ENV ROS_WRAPPER_VERSION 2.2.3
-
 RUN apt-get update && apt-get -y install \
     ros-${ROS_DISTRO}-desktop \
     ros-${ROS_DISTRO}-rgbd-launch
@@ -33,6 +30,8 @@ RUN apt-get update && apt-get -y install \
 && rm -rf /var/lib/apt/lists/*
 
 # Install LibRealSense
+#ENV LIBREALSENSE_VERSION 2.21.0
+ENV LIBREALSENSE_VERSION disable-hids
 WORKDIR /root/
 #RUN git clone https://github.com/IntelRealSense/librealsense.git && 
 #    cd librealsense && \
@@ -41,6 +40,7 @@ WORKDIR /root/
 #    cp config/99-realsense-libusb.rules /etc/udev/rules.d
 RUN git clone https://github.com/Spritaro/librealsense.git && \
     cd librealsense && \
+    git checkout ${LIBREALSENSE_VERSION} && \
     mkdir -p /etc/udev/rules.d && \
     cp config/99-realsense-libusb.rules /etc/udev/rules.d
 RUN cd /root/librealsense && \
@@ -51,6 +51,7 @@ RUN cd /root/librealsense && \
     make install
 
 # Install ROS wrapper
+ENV ROS_WRAPPER_VERSION 2.2.3
 WORKDIR /root/
 RUN mkdir -p catkin_rs/src && \
     cd catkin_rs/src && \
