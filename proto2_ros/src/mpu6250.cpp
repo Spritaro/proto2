@@ -1,7 +1,7 @@
 #include "ros/ros.h"
 #include "sensor_msgs/Imu.h"
 #include "geometry_msgs/Vector3.h"
-#include <WiringPiSPI.h>
+#include <wiringPiSPI.h>
 
 /*
  * this ROS node reads IMU sensor (MPU9050) with SPI interface and 
@@ -31,7 +31,7 @@ void writeByte(const int reg, const int val)
     wiringPiSPIDataRW (/*channel*/ 0, /*data*/ buffer, /*len*/ 2);
 }
 
-void readAllSensors(sensor_msg::Imu &imu)
+void readAllSensors(sensor_msgs::Imu &imu)
 {
     unsigned char buffer[15];
     buffer[0] = 0x10 | 0x3B;
@@ -40,8 +40,8 @@ void readAllSensors(sensor_msg::Imu &imu)
     imu.linear_acceleration.y = (buffer[3]  << 8) & buffer[4];
     imu.linear_acceleration.z = (buffer[5]  << 8) & buffer[6];
     imu.angular_velocity.x    = (buffer[9]  << 8) & buffer[10];
-    imu.angular_velocity.x    = (buffer[11] << 8) & buffer[12];
-    imu.angular_velocity.x    = (buffer[13] << 8) & buffer[14];
+    imu.angular_velocity.y    = (buffer[11] << 8) & buffer[12];
+    imu.angular_velocity.z    = (buffer[13] << 8) & buffer[14];
 }
 
 int main(int argc, char **argv)
@@ -49,13 +49,13 @@ int main(int argc, char **argv)
     /* setup ROS node */
     ros::init(argc, argv, "imu_publisher");
     ros::NodeHandle n;
-    ros::Publisher imu_pub = n.advertise<sensor_msg::Imu>("imu_publisher", 1);
+    ros::Publisher imu_pub = n.advertise<sensor_msgs::Imu>("imu_publisher", 1);
     ros::Rate loop_rate(100);   // 100Hz
 
     /* setup SPI interface
      *     use channel 0
      *     communicate at 1MHz */
-    if(wiringPiSPISetup (/* channel */ 0, /* speed */ 1000000); == -1)
+    if(wiringPiSPISetup (/* channel */ 0, /* speed */ 1000000) == -1)
     {
         // error
         ROS_ERROR("Failed to setup SPI interface");
@@ -70,11 +70,12 @@ int main(int argc, char **argv)
 
     while(ros::ok())
     {
-        sensor_msg::Imu imu;
+        sensor_msgs::Imu imu;
 
         readAllSensors(imu);
 
         imu_pub.publish(imu);
+        ROS_INFO("ang x = %f", imu.angular_velocity.x );
 
         ros::spinOnce();
         loop_rate.sleep();

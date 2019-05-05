@@ -66,4 +66,11 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc && \
 
 RUN pip install numpy
 
+# Install WiringPi
+RUN apt-get update && apt-get install -y sudo
+RUN git clone git://git.drogon.net/wiringPi && \
+    cd wiringPi && \
+    ./build
+
 CMD udevadm control --reload-rules && udevadm trigger
+

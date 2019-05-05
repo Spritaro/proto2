@@ -201,5 +201,4 @@ include_directories(
 # catkin_add_nosetests(test)
 
 add_executable(mpu6250 src/mpu6250.cpp)
-target_link_libraries(mpu6250 ${catkin_LIBRARIES})
-add_dependencies(mpu6250)
+target_link_libraries(mpu6250 ${catkin_LIBRARIES} wiringPi)
