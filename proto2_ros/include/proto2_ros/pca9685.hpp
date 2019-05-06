@@ -7,9 +7,9 @@ class Servo
 {
 private:
     /* assign values of src array to dst array */
-    inline void copy_array(double *dst, double *src)
+    inline void copy_array(double *dst, const double *src, const unsigned int begin_id, const unsigned int nb_val)
     {
-        for(int id = 0; id < SERVONUM; id++)
+        for(int id = begin_id; id < begin_id + nb_val; id++)
             dst[id] = src[id];
     }
 
@@ -31,8 +31,9 @@ private:
         return ( static_cast<unsigned int>((SERVOMAX - SERVOMIN) / (DEGMAX-DEGMIN) * (deg-DEGMIN) + SERVOMIN) );
     }
 
-    /* set pwm to PCA9685 with I2C interface */
-    void set_pwm(const unsigned int id, const unsigned int pwm);
+    void setup_pca9685(void);
+    void set_pwm_freq(const double freq_hz);
+    void set_pwm(const unsigned int channel, const unsigned int pwm);
 
     /* solve inverse kinematics */
     void ik(const double x, const double y, const double z, const double a, double *degs);
@@ -46,12 +47,12 @@ private:
     static const double SERVOMIN;
     static const double SERVOMAX;
 
-    static const double ids[];
+    static const double channels[];
     static const double ccws[];
     static const double offsets[];
 
-    double current_degs[];
-    double end_degs[];
+    static double current_degs[];
+    static double end_degs[];
 
 public:
     Servo(void);
@@ -61,16 +62,16 @@ public:
     void poweroff_servos(void);
 
     /* set servo angles without moving */
-    void set_head_angles(const double end_deg_yaw, const double end_deg_pitch);
-    void set_body_angles(const double *end_degs);
+    void set_head_angles(const double target_deg_yaw, const double target_deg_pitch);
+    void set_body_angles(const double *target_degs);
 
     /* move all servos to set angles */
     void move_servos(const unsigned int duration = 1);  // duration in ms
 
     /* set body angles and move all servos */
-    void set_and_move_servos(const double *end_degs);
-    void set_and_move_servos(const unsigned int duration, const double *end_degs);
-    void set_and_move_servos(const unsigned int duration, const double *end_poss, const double *end_degs);
+    void set_and_move_servos(const double *target_degs);
+    void set_and_move_servos(const unsigned int duration, const double *target_degs);
+    void set_and_move_servos(const unsigned int duration, const double *target_poss, const double *target_degs);
 };
 
 #endif
