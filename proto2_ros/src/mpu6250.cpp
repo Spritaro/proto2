@@ -2,6 +2,8 @@
 #include "sensor_msgs/Imu.h"
 #include "geometry_msgs/Vector3.h"
 #include <wiringPiSPI.h>
+#include <linux/spi/spidev.h>
+#include <sys/ioctl.h>
 
 /*
  * this ROS node reads IMU sensor (MPU9050) with SPI interface and 
@@ -33,15 +35,14 @@ void writeByte(const int reg, const int val)
 
 void readAllSensors(sensor_msgs::Imu &imu)
 {
-    unsigned char buffer[15];
-    buffer[0] = 0x10 | 0x3B;
-    wiringPiSPIDataRW (/*channel*/ 0, /*data*/ buffer, /*len*/ 15);
-    imu.linear_acceleration.x = (buffer[1]  << 8) & buffer[2];
-    imu.linear_acceleration.y = (buffer[3]  << 8) & buffer[4];
-    imu.linear_acceleration.z = (buffer[5]  << 8) & buffer[6];
-    imu.angular_velocity.x    = (buffer[9]  << 8) & buffer[10];
-    imu.angular_velocity.y    = (buffer[11] << 8) & buffer[12];
-    imu.angular_velocity.z    = (buffer[13] << 8) & buffer[14];
+    // bit * 16g(156.8m/s2) / 32768bit
+    imu.linear_acceleration.x = static_cast<int16_t>((readByte(0x3b) << 8) | readByte(0x3c)) * 156.8 / 32768.0;
+    imu.linear_acceleration.y = static_cast<int16_t>((readByte(0x3d) << 8) | readByte(0x3e)) * 156.8 / 32768.0;
+    imu.linear_acceleration.z = static_cast<int16_t>((readByte(0x3f) << 8) | readByte(0x40)) * 156.8 / 32768.0;
+    // bit * 2000dps / 32768bit
+    imu.angular_velocity.x    = static_cast<int16_t>((readByte(0x43) << 8) | readByte(0x44)) * 2000.0 / 32768.0;
+    imu.angular_velocity.y    = static_cast<int16_t>((readByte(0x45) << 8) | readByte(0x46)) * 2000.0 / 32768.0;
+    imu.angular_velocity.z    = static_cast<int16_t>((readByte(0x47) << 8) | readByte(0x48)) * 2000.0 / 32768.0;
 }
 
 int main(int argc, char **argv)
@@ -49,33 +50,44 @@ int main(int argc, char **argv)
     /* setup ROS node */
     ros::init(argc, argv, "imu_publisher");
     ros::NodeHandle n;
-    ros::Publisher imu_pub = n.advertise<sensor_msgs::Imu>("imu_publisher", 1);
+    ros::Publisher imu_pub = n.advertise<sensor_msgs::Imu>("imu/data_raw", 1);
     ros::Rate loop_rate(100);   // 100Hz
 
     /* setup SPI interface
      *     use channel 0
      *     communicate at 1MHz */
-    if(wiringPiSPISetup (/* channel */ 0, /* speed */ 1000000) == -1)
+    int fd = wiringPiSPISetup (/* channel */ 0, /* speed */ 1000000);
+    if(fd == -1)
     {
         // error
         ROS_ERROR("Failed to setup SPI interface");
         return(0);
     }
+    int spiMode = 0;
+    ioctl(fd, SPI_IOC_WR_MODE, &spiMode);
 
     /* setup MPU6250 */
-    ROS_INFO("WHO AM I %d", readByte(0x075) );      // read WHO AM I register
-    writeByte(0x6B, 0x81);  // reset device
+    writeByte(0x6A, 0x10);  // SPI mode only
+    ROS_INFO("WHO AM I %d", readByte(0x75) );      // read WHO AM I register 0111 0101 should return 0x71
     writeByte(0x1B, 0x18);  // set gyro scale +2000dps, enable DLPF
     writeByte(0x1C, 0x18);  // set accel scale to +/-16G
+    writeByte(0x6B, 0x00);  // start device, internal oscillator
 
+    sensor_msgs::Imu imu;
     while(ros::ok())
     {
-        sensor_msgs::Imu imu;
-
         readAllSensors(imu);
 
+        imu.header.stamp = ros::Time::now();
+        imu.header.frame_id = "map";
         imu_pub.publish(imu);
-        ROS_INFO("ang x = %f", imu.angular_velocity.x );
+        // ROS_INFO("acc x %f y %f z %f ang x %f y %f z %f", 
+        //     imu.linear_acceleration.x,
+        //     imu.linear_acceleration.y,
+        //     imu.linear_acceleration.z,
+        //     imu.angular_velocity.x,
+        //     imu.angular_velocity.y,
+        //     imu.angular_velocity.z );
 
         ros::spinOnce();
         loop_rate.sleep();
