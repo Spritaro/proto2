@@ -39,10 +39,10 @@ void readAllSensors(sensor_msgs::Imu &imu)
     imu.linear_acceleration.x = static_cast<int16_t>((readByte(0x3b) << 8) | readByte(0x3c)) * 156.8 / 32768.0;
     imu.linear_acceleration.y = static_cast<int16_t>((readByte(0x3d) << 8) | readByte(0x3e)) * 156.8 / 32768.0;
     imu.linear_acceleration.z = static_cast<int16_t>((readByte(0x3f) << 8) | readByte(0x40)) * 156.8 / 32768.0;
-    // bit * 2000dps / 32768bit
-    imu.angular_velocity.x    = static_cast<int16_t>((readByte(0x43) << 8) | readByte(0x44)) * 2000.0 / 32768.0;
-    imu.angular_velocity.y    = static_cast<int16_t>((readByte(0x45) << 8) | readByte(0x46)) * 2000.0 / 32768.0;
-    imu.angular_velocity.z    = static_cast<int16_t>((readByte(0x47) << 8) | readByte(0x48)) * 2000.0 / 32768.0;
+    // bit * 2000dps / 32768bit * 3.14159265359 / 180.0
+    imu.angular_velocity.x    = static_cast<int16_t>((readByte(0x43) << 8) | readByte(0x44)) * 2000.0 / 32768.0 * 3.14159265359 / 180.0;
+    imu.angular_velocity.y    = static_cast<int16_t>((readByte(0x45) << 8) | readByte(0x46)) * 2000.0 / 32768.0 * 3.14159265359 / 180.0;
+    imu.angular_velocity.z    = static_cast<int16_t>((readByte(0x47) << 8) | readByte(0x48)) * 2000.0 / 32768.0 * 3.14159265359 / 180.0;
 }
 
 int main(int argc, char **argv)
