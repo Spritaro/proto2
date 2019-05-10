@@ -3,6 +3,7 @@ FROM ros:kinetic
 ENV ROS_DISTRO kinetic
 RUN apt-get update && apt-get -y install \
     ros-${ROS_DISTRO}-desktop \
+    ros-${ROS_DISTRO}-imu-filter-madgwick \
     ros-${ROS_DISTRO}-rgbd-launch
 
 RUN apt-get update && apt-get -y install \
@@ -22,6 +23,7 @@ RUN apt-get update && apt-get -y install \
     python3 \
     python3-dev \
     python3-pip \
+    sudo \
     udev \
     unzip \
     usbutils \
@@ -67,7 +69,6 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc && \
 RUN pip install numpy
 
 # Install WiringPi
-RUN apt-get update && apt-get install -y sudo
 RUN git clone git://git.drogon.net/wiringPi && \
     cd wiringPi && \
     ./build
