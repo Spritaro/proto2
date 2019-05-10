@@ -200,8 +200,8 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(mpu6250 src/mpu6250.cpp)
-target_link_libraries(mpu6250 ${catkin_LIBRARIES} wiringPi)
+add_executable(mpu9250 src/mpu9250.cpp)
+target_link_libraries(mpu9250 ${catkin_LIBRARIES} wiringPi)
 
 add_executable(motion src/motion.cpp src/pca9685.cpp)
 target_link_libraries(motion ${catkin_LIBRARIES} wiringPi)

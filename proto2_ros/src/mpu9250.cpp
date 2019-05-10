@@ -10,7 +10,7 @@
  * publishes imu/data_raw (sensor_msgs/Imu) message for imu_filter_madgwick
  */
 
-/* SPI communication with MPU6250
+/* SPI communication with MPU9250
  *     first byte contains SPI address
  *     first bit indicates Read (1) or Write (0) operation
  * refer to 
@@ -66,7 +66,7 @@ int main(int argc, char **argv)
     int spiMode = 0;
     ioctl(fd, SPI_IOC_WR_MODE, &spiMode);
 
-    /* setup MPU6250 */
+    /* setup MPU9250 */
     writeByte(0x6A, 0x10);  // SPI mode only
     ROS_INFO("WHO AM I %d", readByte(0x75) );      // read WHO AM I register 0111 0101 should return 0x71
     writeByte(0x1B, 0x18);  // set gyro scale +2000dps, enable DLPF
