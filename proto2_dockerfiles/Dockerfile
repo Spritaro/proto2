@@ -64,7 +64,8 @@ RUN /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash ; \
     cd catkin_rs ; \
     catkin_make"
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc && \
-    echo "source /root/catkin_rs/devel/setup.bash" >> ~/.bashrc
+    echo "source /root/catkin_rs/devel/setup.bash" >> ~/.bashrc && \
+    echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 RUN pip install numpy
 
@@ -73,5 +74,16 @@ RUN git clone git://git.drogon.net/wiringPi && \
     cd wiringPi && \
     ./build
 
-CMD udevadm control --reload-rules && udevadm trigger
+#
+RUN apt-get update && apt-get -y install \
+    ros-kinetic-compressed-image-transport \
+    ros-kinetic-rosbridge-server \
+    ros-kinetic-tf \
+    ros-kinetic-joy
+
+CMD udevadm control --reload-rules && udevadm trigger && \
+    source /opt/ros/${ROS_DISTRO}/setup.bash && \
+    catkin_make && \
+    source /root/catkin_ws/devel/setup.bash
+#    roslaunch proto2_ros bringup.launch
 
