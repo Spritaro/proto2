@@ -12,7 +12,7 @@
     <!-- IMU -->
     <include file="$(find proto2_ros)/launch/imu.launch" />
 
-    <!-- Motion -->
-    <!-- TODO -->
+    <!-- all control -->
+    <node pkg="proto2_ros" type="proto2" name="proto2" output="screen" />
 
 </launch>

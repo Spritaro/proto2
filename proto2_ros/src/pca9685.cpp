@@ -1,21 +1,13 @@
-#include <proto2_ros/pca9685.hpp>
+#include "proto2_ros/pca9685.hpp"
 #include <wiringPiI2C.h>
 #include <math.h>
 #include <unistd.h>
-#include <ros/ros.h>
 
 /*
  * this module controls servo motors from PCA9685 with I2C interface
  */
 
 /* initialize parameters */
-const unsigned int Servo::STEP_MS = 10;
-const unsigned int Servo::SERVONUM = 16;
-const double Servo::DEGMIN = -90.0;
-const double Servo::DEGMAX = 90.0;
-const double Servo::SERVOMIN = 103.0;
-const double Servo::SERVOMAX = 490.0;
-
 const double Servo::channels[] = {0,1,2,3, 15,14,13,12, 4,5,6, 11,10,9, 8,7};
 const double Servo::ccws[] = {1.,1.,-1.,1., -1.,1.,-1.,-1, -1.,-1.,1., 1.,1.,-1., 1.,-1.};
 const double Servo::offsets[] = {-15.,-42.,70.,-40., 78.,60.,-18.,77., 23.,5.,-4., 15.,58.,52., 26.,36.};
@@ -23,7 +15,8 @@ const double Servo::offsets[] = {-15.,-42.,70.,-40., 78.,60.,-18.,77., 23.,5.,-4
 double Servo::current_degs[Servo::SERVONUM];
 double Servo::end_degs[Servo::SERVONUM];
 
-Servo::Servo(void)
+Servo::Servo(void) :
+    loop_rate(1000.0/STEP_MS)
 {
     /* create I2C interface */
     ROS_INFO("setting up I2C interface");
@@ -169,7 +162,8 @@ void Servo::move_servos(const unsigned int duration)
         for(int id = 0; id < SERVONUM; id++)
             set_pwm( channels[id], deg2width(degs_tmp[id]*ccws[id]+offsets[id]) );
 
-        sleep(STEP_MS / 1000.0);
+        ros::spinOnce();
+        loop_rate.sleep();
     }
 }
 

@@ -81,6 +81,7 @@ RUN apt-get update && apt-get -y install \
     ros-kinetic-tf \
     ros-kinetic-joy
 
+WORKDIR /root/catkin_ws
 CMD udevadm control --reload-rules && udevadm trigger && \
     source /opt/ros/${ROS_DISTRO}/setup.bash && \
     catkin_make && \

@@ -1,6 +1,7 @@
 #ifndef PCA9685_HPP
 #define PCA9685_HPP
 
+#include <ros/ros.h>
 #include <math.h>
 
 class Servo
@@ -40,12 +41,12 @@ private:
 
     int i2c_fd;
 
-    static const unsigned int STEP_MS;
-    static const unsigned int SERVONUM;
-    static const double DEGMIN;
-    static const double DEGMAX;
-    static const double SERVOMIN;
-    static const double SERVOMAX;
+    static const unsigned int STEP_MS = 10;
+    static const unsigned int SERVONUM = 16;
+    static const double DEGMIN = -90.0;
+    static const double DEGMAX = 90.0;
+    static const double SERVOMIN = 103.0;
+    static const double SERVOMAX = 490.0;
 
     static const double channels[];
     static const double ccws[];
@@ -53,6 +54,8 @@ private:
 
     static double current_degs[];
     static double end_degs[];
+
+    ros::Rate loop_rate;
 
 public:
     Servo(void);
