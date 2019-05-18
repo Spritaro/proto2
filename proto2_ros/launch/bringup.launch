@@ -1,0 +1,18 @@
+<launch>
+
+    <!-- RosBridge -->
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
+
+    <!-- Joy -->
+    <node pkg="joy" type="joy_node" name="joy_node" />
+
+    <!-- RealSense -->
+    <include file="$(find proto2_ros)/launch/realsense.launch" />
+
+    <!-- IMU -->
+    <include file="$(find proto2_ros)/launch/imu.launch" />
+
+    <!-- Motion -->
+    <!-- TODO -->
+
+</launch>
