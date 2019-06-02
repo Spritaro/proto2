@@ -1,6 +1,4 @@
 #include "proto2_ros/vr_head_control.hpp"
-#include <ros/ros.h>
-#include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/Quaternion.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <math.h>

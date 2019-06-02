@@ -203,5 +203,5 @@ include_directories(
 add_executable(mpu9250 src/mpu9250.cpp)
 target_link_libraries(mpu9250 ${catkin_LIBRARIES} wiringPi)
 
-add_executable(proto2 src/proto2.cpp src/vr_head_control.cpp src/pca9685.cpp)
+add_executable(proto2 src/proto2.cpp src/motion.cpp src/vr_head_control.cpp src/pca9685.cpp)
 target_link_libraries(proto2 ${catkin_LIBRARIES} wiringPi)

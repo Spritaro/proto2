@@ -1,6 +1,5 @@
 #include "proto2_ros/pca9685.hpp"
 #include <wiringPiI2C.h>
-#include <math.h>
 #include <unistd.h>
 
 /*
@@ -8,9 +7,9 @@
  */
 
 /* initialize parameters */
-const double Servo::channels[] = {0,1,2,3, 15,14,13,12, 4,5,6, 11,10,9, 8,7};
-const double Servo::ccws[] = {1.,1.,-1.,1., -1.,1.,-1.,-1, -1.,-1.,1., 1.,1.,-1., 1.,-1.};
-const double Servo::offsets[] = {-15.,-42.,70.,-40., 78.,60.,-18.,77., 23.,5.,-4., 15.,58.,52., 26.,36.};
+const double Servo::channels[] = {0,1,2,3, 7,6,5,4, 13,14,15, 10,9,8, 12,11};
+const double Servo::ccws[]     = {1,1,-1,1, -1,1,-1,-1, -1,-1,1, 1,1,-1, 1,-1};
+const double Servo::offsets[]  = {-15,-42,70,-40, 78,60,-18,77, 23,5,-4, 15,58,52, 26,36};
 
 double Servo::current_degs[Servo::SERVONUM];
 double Servo::end_degs[Servo::SERVONUM];
@@ -116,9 +115,10 @@ void Servo::ik(const double x, const double y, const double z, const double a, d
 
 void Servo::poweroff_servos(void)
 {
+    // TODO
 }
 
-/* sert servo angles */
+/* only set target angles */
 void Servo::set_head_angles(const double target_deg_yaw, const double target_deg_pitch)
 {
     end_degs[SERVONUM-2] = target_deg_yaw;
@@ -130,7 +130,7 @@ void Servo::set_body_angles(const double *target_degs)
     copy_array(end_degs, target_degs, 0, SERVONUM-2);
 }
 
-/* move servos */
+/* move servos to set target angles */
 void Servo::move_servos(const unsigned int duration)
 {
     // 1ms -> STEP_MS ms

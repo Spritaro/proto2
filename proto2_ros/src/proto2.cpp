@@ -1,5 +1,27 @@
-#include "proto2_ros/vr_head_control.hpp"
-#include <ros/ros.h>
+#include "proto2_ros/proto2.hpp"
+
+/* constructor */
+Proto2::Proto2(ros::NodeHandle n) :
+    motion(n),
+    vr_head_control(n)
+{
+}
+
+void Proto2::whole_control(void)
+{
+    /* initial setting*/
+    vr_head_control.enable_vr_head_control();
+
+    /* main loop */
+    while(ros::ok())
+    {
+        ROS_INFO("Stop");
+        motion.stop();
+        motion.crouch();
+    }
+
+    ROS_INFO("Done");
+}
 
 int main(int argc, char **argv)
 {
@@ -7,17 +29,11 @@ int main(int argc, char **argv)
 
     ros::NodeHandle n;
 
-    // VR頭部制御のテスト
-    // TODO: 全体制御が出来たら統合
-    VrHeadControl vr_head_tmp(n);
+    // 全体制御モジュール
+    Proto2 proto2(n);
 
-    double poss[8] = {0.,20.,-240.,0., 0.,-20.,-240.,0.};
-    double degs[6] = {0.,-45.,45., 0.,-45.,45.};
-    while(ros::ok())
-    {
-        // ros::spinOnce()はサーボ制御モジュールの中で実施される
-        vr_head_tmp.set_and_move_servos(100, poss, degs);
-    }
+    proto2.whole_control();
+
 
     return 0;
 }
