@@ -13,14 +13,28 @@ void Proto2::whole_control(void)
     vr_head_control.enable_vr_head_control();
 
     /* main loop */
+    ROS_INFO("Start main loop");
     while(ros::ok())
     {
-        ROS_INFO("Stop");
-        motion.stop();
-        motion.crouch();
-    }
+        ros::spinOnce();
 
-    ROS_INFO("Done");
+        if(motion.joy.axes[motion.STICK_LY] > 0)
+        {
+            /* forward */
+            motion.walk_forward_pre();
+            while(ros::ok())
+            {
+                motion.walk_forward_1();
+                if(motion.joy.axes[motion.STICK_LY] <= 0) break;
+                motion.walk_forward_2();
+                if(motion.joy.axes[motion.STICK_LY] <= 0) break;
+            }
+        }
+        else
+        {
+            motion.stop();
+        }
+    }
 }
 
 int main(int argc, char **argv)
