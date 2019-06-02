@@ -21,6 +21,9 @@ public:
     void walk_forward_2(void);
 
     /* backward */
+    void walk_backward_pre(void);
+    void walk_backward_1(void);
+    void walk_backward_2(void);
 
     /* turn */
 

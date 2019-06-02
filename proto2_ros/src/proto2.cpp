@@ -29,6 +29,20 @@ void Proto2::whole_control(void)
                 motion.walk_forward_2();
                 if(motion.joy.axes[motion.STICK_LY] <= 0) break;
             }
+            motion.crouch_little();
+        }
+        else if(motion.joy.axes[motion.STICK_LY] < 0)
+        {
+            /* backward */
+            motion.walk_backward_pre();
+            while(ros::ok())
+            {
+                motion.walk_backward_1();
+                if(motion.joy.axes[motion.STICK_LY] >= 0) break;
+                motion.walk_backward_2();
+                if(motion.joy.axes[motion.STICK_LY] >= 0) break;
+            }
+            motion.crouch_little();
         }
         else
         {

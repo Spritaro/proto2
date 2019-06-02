@@ -24,29 +24,59 @@ void Motion::walk_forward_pre(void)
 {
     double poss[8] = {0,20,-230,0, 0,-20,-235,0};
     double degs[6] = {0,-45,45, 0,-45,45};
-    set_and_move_servos(80, poss, degs);
+    set_and_move_servos(50, poss, degs);
 }
 
 void Motion::walk_forward_1(void)
 {
     double poss0[8] = {-15,20,-230,0, 15,-20,-210,0};
     double degs0[6] = {10,-45,45, -10,-45,45};
-    set_and_move_servos(80, poss0, degs0);
+    set_and_move_servos(50, poss0, degs0);
 
     double poss1[8] = {-15,20,-230,0, 15,-20,-235,0};
     double degs1[6] = {10,-45,45, -10,-45,45};
-    set_and_move_servos(80, poss1, degs1);
+    set_and_move_servos(50, poss1, degs1);
 }
 
 void Motion::walk_forward_2(void)
 {
     double poss0[8] = {15,20,-210,0, -15,-20,-230,0};
-    double degs0[6] = {-10,-45,45,  10,-45,45};
-    set_and_move_servos(80, poss0, degs0);
+    double degs0[6] = {-10,-45,45, 10,-45,45};
+    set_and_move_servos(50, poss0, degs0);
 
     double poss1[8] = {15,20,-235,0, -15,-20,-230,0};
-    double degs1[6] = {-10,-45,45,  10,-45,45};
-    set_and_move_servos(80, poss1, degs1);
+    double degs1[6] = {-10,-45,45, 10,-45,45};
+    set_and_move_servos(50, poss1, degs1);
+}
+
+/* backward */
+void Motion::walk_backward_pre(void)
+{
+    double poss[8] = {0,20,-230,0, 0,-20,-235,0};
+    double degs[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss, degs);
+}
+
+void Motion::walk_backward_1(void)
+{
+    double poss0[8] = {15,20,-230,0, -15,-20,-210,0};
+    double degs0[6] = {-10,-45,45, 10,-45,45};
+    set_and_move_servos(50, poss0, degs0);
+
+    double poss1[8] = {15,20,-230,0, -15,-20,-235,0};
+    double degs1[6] = {-10,-45,45, 10,-45,45};
+    set_and_move_servos(50, poss1, degs1);
+}
+
+void Motion::walk_backward_2(void)
+{
+    double poss0[8] = {-15,20,-210,0, 15,-20,-230,0};
+    double degs0[6] = {10,-45,45, -10,-45,45};
+    set_and_move_servos(50, poss0, degs0);
+
+    double poss1[8] = {-15,20,-235,0, 15,-20,-230,0};
+    double degs1[6] = {10,-45,45, -10,-45,45};
+    set_and_move_servos(50, poss1, degs1);
 }
 
 /* for stability */
@@ -54,7 +84,7 @@ void Motion::crouch_little(void)
 {
     double poss[8] = {0.,20.,-200.,0., 0.,-20.,-200.,0.};
     double degs[6] = {0.,-45.,45., 0.,-45.,45.};
-    set_and_move_servos(80, poss, degs);
+    set_and_move_servos(50, poss, degs);
 }
 
 /* stop */
