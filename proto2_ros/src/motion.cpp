@@ -79,12 +79,34 @@ void Motion::walk_backward_2(void)
     set_and_move_servos(50, poss1, degs1);
 }
 
+/* side */
+
+/* turn */
+void Motion::turn_right(void)
+{
+    double poss0[8] = {40, 40,-220,-10, -40,-40,-220,10};
+    double degs0[6] = {-20,-45,45, 20,-45,45};
+    set_and_move_servos(50, poss0, degs0);
+    double poss1[8] = {0,0,-220,0, 0,0,-220,0};
+    double degs1[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(200, poss1, degs1);
+}
+void Motion::turn_left(void)
+{
+    double poss0[8] = {-40, 40,-220,-10, 40,-40,-220,10};
+    double degs0[6] = {20,-45,45, -20,-45,45};
+    set_and_move_servos(50, poss0, degs0);
+    double poss1[8] = {0,0,-220,0, 0,0,-220,0};
+    double degs1[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(200, poss1, degs1);
+}
+
 /* for stability */
 void Motion::crouch_little(void)
 {
     double poss[8] = {0.,20.,-200.,0., 0.,-20.,-200.,0.};
     double degs[6] = {0.,-45.,45., 0.,-45.,45.};
-    set_and_move_servos(50, poss, degs);
+    set_and_move_servos(100, poss, degs);
 }
 
 /* stop */

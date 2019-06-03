@@ -44,6 +44,26 @@ void Proto2::whole_control(void)
             }
             motion.crouch_little();
         }
+        else if(motion.joy.buttons[motion.BUTTON_RB] == 1)
+        {
+            /* right turn */
+            while(ros::ok())
+            {
+                motion.turn_right();
+                if(motion.joy.buttons[motion.BUTTON_RB] != 1) break;
+            }
+            motion.crouch_little();
+        }
+        else if(motion.joy.buttons[motion.BUTTON_LB] == 1)
+        {
+            /* left turn */
+            while(ros::ok())
+            {
+                motion.turn_left();
+                if(motion.joy.buttons[motion.BUTTON_LB] != 1) break;
+            }
+            motion.crouch_little();
+        }
         else
         {
             motion.stop();
