@@ -80,11 +80,62 @@ void Motion::walk_backward_2(void)
 }
 
 /* side */
+void Motion::walk_right_pre(void)
+{
+    double poss0[8] = {0,0,-215,0, 0,0,-225,0};
+    double degs0[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss0, degs0);
+}
+
+void Motion::walk_right(void)
+{
+    double poss1[8] = {0,25,-220,0, 0,-25,-200,0};
+    double degs1[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss1, degs1);
+
+    double poss2[8] = {0,50,-220,0, 0,-50,-220,0};
+    double degs2[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss2, degs2);
+
+    double poss3[8] = {0,25,-200,0, 0,-25,-220,0};
+    double degs3[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss3, degs3);
+
+    double poss4[8] = {0,0,-220,0, 0,0,-220,0};
+    double degs4[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss4, degs4);
+}
+
+void Motion::walk_left_pre(void)
+{
+    double poss0[8] = {0,0,-225,0, 0,0,-215,0};
+    double degs0[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss0, degs0);
+}
+
+void Motion::walk_left(void)
+{
+    double poss1[8] = {0,25,-200,0, 0,-25,-220,0};
+    double degs1[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss1, degs1);
+
+    double poss2[8] = {0,50,-220,0, 0,-50,-220,0};
+    double degs2[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss2, degs2);
+
+    double poss3[8] = {0,25,-220,0, 0,-25,-200,0};
+    double degs3[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss3, degs3);
+
+    double poss4[8] = {0,0,-220,0, 0,0,-220,0};
+    double degs4[6] = {0,-45,45, 0,-45,45};
+    set_and_move_servos(50, poss4, degs4);
+}
 
 /* turn */
 void Motion::turn_right(void)
 {
-    double poss0[8] = {40, 40,-220,-10, -40,-40,-220,10};
+    double poss0[8] = {40,40,-220,-10, -40,-40,-220,10};
     double degs0[6] = {-20,-45,45, 20,-45,45};
     set_and_move_servos(50, poss0, degs0);
     double poss1[8] = {0,0,-220,0, 0,0,-220,0};
@@ -93,7 +144,7 @@ void Motion::turn_right(void)
 }
 void Motion::turn_left(void)
 {
-    double poss0[8] = {-40, 40,-220,-10, 40,-40,-220,10};
+    double poss0[8] = {-40,40,-220,-10, 40,-40,-220,10};
     double degs0[6] = {20,-45,45, -20,-45,45};
     set_and_move_servos(50, poss0, degs0);
     double poss1[8] = {0,0,-220,0, 0,0,-220,0};

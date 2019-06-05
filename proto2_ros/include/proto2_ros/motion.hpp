@@ -26,6 +26,10 @@ public:
     void walk_backward_2(void);
 
     /* side */
+    void walk_right_pre(void);
+    void walk_right(void);
+    void walk_left_pre(void);
+    void walk_left(void);
 
     /* turn */
     void turn_right(void);
