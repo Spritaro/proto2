@@ -36,6 +36,7 @@ public:
     void turn_left(void);
 
     /* getup */
+    void getup_front(void);
     
     /* for stability */
     void crouch_little(void);

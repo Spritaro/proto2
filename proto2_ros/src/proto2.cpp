@@ -86,6 +86,11 @@ void Proto2::whole_control(void)
             }
             motion.crouch_little();
         }
+        else if(motion.joy.buttons[motion.BUTTON_LT] == 1 && motion.joy.buttons[motion.BUTTON_Y] == 1)
+        {
+            /* getup front */
+            motion.getup_front();
+        }
         else
         {
             motion.stop();
