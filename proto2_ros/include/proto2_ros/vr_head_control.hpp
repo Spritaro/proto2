@@ -14,8 +14,8 @@ private:
 
     static const double angle_yaw_min = -60;
     static const double angle_yaw_max =  60;
-    static const double angle_pitch_min = -60;
-    static const double angle_pitch_max =  60;
+    static const double angle_pitch_min = -45;
+    static const double angle_pitch_max =  30;
 
     ros::Subscriber sub;
 

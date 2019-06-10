@@ -7,8 +7,8 @@
  */
 
 /* initialize parameters */
-const double Servo::channels[] = {0,1,2,3, 7,6,5,4, 13,14,15, 10,9,8, 12,11};
-const double Servo::ccws[]     = {1,1,-1,1, -1,1,-1,-1, -1,-1,1, 1,1,-1, 1,-1};
+const double Servo::channels[] = {0,1,2,3, 7,6,5,4, 13,14,15, 10,9,8, 11,12};
+const double Servo::ccws[]     = {1,1,-1,1, -1,1,-1,-1, -1,-1,1, 1,1,-1, 1,1};
 const double Servo::offsets[]  = {-15,-42,70,-40, 78,60,-18,77, 23,5,-4, 15,58,52, 26,36};
 
 double Servo::current_degs[Servo::SERVONUM];
