@@ -37,6 +37,7 @@ public:
 
     /* getup */
     void getup_front(void);
+    void getup_back(void);
     
     /* for stability */
     void crouch_little(void);

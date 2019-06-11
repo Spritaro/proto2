@@ -194,6 +194,40 @@ void Motion::getup_front(void)
     set_and_move_servos(100, poss5, degs5);
 }
 
+void Motion::getup_back(void)
+{
+    // ready arms
+    double poss0[8] = {0,100,-130,0, 0,-100,-130,0};
+    double degs0[6] = {0,45,-60, 0,45,-60};
+    set_and_move_servos(200, poss0, degs0);
+    set_and_move_servos(100, poss0, degs0);
+    // get ready
+    double poss1[8] = {-20,139,-80,0, -20,-139,-80,0};
+    double degs1[6] = {-90,45,-60, -90,45,-60};
+    set_and_move_servos(200, poss1, degs1);
+    set_and_move_servos(100, poss1, degs1);
+    // get up
+    double poss2[8] = {-20,139,-80,0, -20,-139,-80,0};
+    double degs2[6] = {-70,-90,90, -70,-90,90};
+    set_and_move_servos(100, poss2, degs2);
+    set_and_move_servos(100, poss2, degs2);
+    // move back
+    double poss3[8] = {0,139,-80,0, 0,-139,-80,0};
+    double degs3[6] = {-70,-90,90, -70,-90,90};
+    set_and_move_servos(180, poss3, degs3);
+    set_and_move_servos(900, poss3, degs3);
+    // close legs
+    double poss4[8] = {0,20,-160,0, 0,-20,-160,0};
+    double degs4[6] = {-70,-45,60, -70,-45,60};
+    set_and_move_servos(200, poss4, degs4);
+    set_and_move_servos(100, poss4, degs4);
+    // stand up
+    double poss5[8] = {0,20,-230,0, 0,-20,-230,0};
+    double degs5[6] = {0,-45,60, 0,-45,60};
+    set_and_move_servos(200, poss5, degs5);
+    set_and_move_servos(100, poss5, degs5);
+}
+
 /* stop */
 void Motion::stop(void)
 {

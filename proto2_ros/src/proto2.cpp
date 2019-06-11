@@ -91,6 +91,11 @@ void Proto2::whole_control(void)
             /* getup front */
             motion.getup_front();
         }
+        else if(motion.joy.buttons[motion.BUTTON_LT] == 1 && motion.joy.buttons[motion.BUTTON_A] == 1)
+        {
+            /* getup back */
+            motion.getup_back();
+        }
         else
         {
             motion.stop();
