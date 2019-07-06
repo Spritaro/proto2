@@ -35,6 +35,9 @@ public:
     void turn_right(void);
     void turn_left(void);
 
+    /* get down */
+    void get_down(void);
+
     /* getup */
     void getup_front(void);
     void getup_back(void);

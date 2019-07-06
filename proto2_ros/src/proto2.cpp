@@ -76,6 +76,15 @@ void Proto2::whole_control(void)
             }
             motion.crouch_little();
         }
+        else if(motion.joy.buttons[motion.BUTTON_A] == 1)
+        {
+            /* get down */
+            while(ros::ok())
+            {
+                motion.get_down();
+                if(motion.joy.buttons[motion.BUTTON_A] != 1) break;
+            }
+        }
         else if(motion.joy.buttons[motion.BUTTON_LB] == 1)
         {
             /* left turn */

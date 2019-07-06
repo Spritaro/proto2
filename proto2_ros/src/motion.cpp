@@ -160,6 +160,14 @@ void Motion::crouch_little(void)
     set_and_move_servos(100, poss, degs);
 }
 
+/* get down */
+void Motion::get_down(void)
+{
+    double poss[8] = {0.,40.,-160.,0., 0.,-40.,-160.,0.};
+    double degs[6] = {0.,-45.,45., 0.,-45.,45.};
+    set_and_move_servos(100, poss, degs);
+}
+
 void Motion::getup_front(void)
 {
     // ready arms
