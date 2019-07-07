@@ -39,6 +39,9 @@ public:
     void punch_right(void);
     void punch_left(void);
 
+    /* throw dice (10cm cube) */
+    void throw_dice(void);
+
     /* get down */
     void get_down(void);
 

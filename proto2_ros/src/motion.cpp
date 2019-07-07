@@ -183,6 +183,21 @@ void Motion::punch_left(void)
     set_and_move_servos(200, poss, degs2);
 }
 
+/* throw dice */
+void Motion::throw_dice(void)
+{
+    // sit down
+    double poss0[8] = {0,0,-161,0, 0,0,-161,0};
+    double degs0[6] = {0,-80,90, 0,-80,90};
+    set_and_move_servos(500, poss0, degs0);
+    set_and_move_servos(100, poss0, degs0);
+    // throw
+    double poss1[8] = {0,0,-161,0, 0,0,-161,0};
+    double degs1[6] = {90,-110,90, 90,-110,90};
+    set_and_move_servos(500, poss1, degs1);
+    set_and_move_servos(100, poss1, degs1);
+}
+
 /* get down */
 void Motion::get_down(void)
 {
@@ -191,6 +206,7 @@ void Motion::get_down(void)
     set_and_move_servos(100, poss, degs);
 }
 
+/* get up from fall */
 void Motion::getup_front(void)
 {
     // ready arms
