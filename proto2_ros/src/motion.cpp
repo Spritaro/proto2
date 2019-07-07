@@ -160,6 +160,29 @@ void Motion::crouch_little(void)
     set_and_move_servos(100, poss, degs);
 }
 
+/* punch */
+void Motion::punch_right(void)
+{
+    double poss[8] = {0.,20.,-230.,0., 0.,-20.,-230.,0.};
+    double degs0[6] = {0.,-45.,45., 90.,-100.,90.};
+    set_and_move_servos(100, poss, degs0);
+    double degs1[6] = {0.,-45.,45., 90.,-100.,90.};
+    set_and_move_servos(100, poss, degs1);
+    double degs2[6] = {0.,-45.,45., 90.,0.,-45.};
+    set_and_move_servos(200, poss, degs2);
+}
+
+void Motion::punch_left(void)
+{
+    double poss[8] = {0.,20.,-230.,0., 0.,-20.,-230.,0.};
+    double degs0[6] = {90.,-100.,90., 0.,-45.,45.};
+    set_and_move_servos(100, poss, degs0);
+    double degs1[6] = {90.,-100.,90., 0.,-45.,45.};
+    set_and_move_servos(100, poss, degs1);
+    double degs2[6] = {90.,0.,-45., 0.,-45.,45.};
+    set_and_move_servos(200, poss, degs2);
+}
+
 /* get down */
 void Motion::get_down(void)
 {

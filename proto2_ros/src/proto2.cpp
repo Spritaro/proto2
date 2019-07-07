@@ -76,6 +76,16 @@ void Proto2::whole_control(void)
             }
             motion.crouch_little();
         }
+        else if(motion.joy.buttons[motion.BUTTON_B] == 1)
+        {
+            /* punch right */
+            motion.punch_right();
+        }
+        else if(motion.joy.buttons[motion.BUTTON_X] == 1)
+        {
+            /* punch left */
+            motion.punch_left();
+        }
         else if(motion.joy.buttons[motion.BUTTON_A] == 1)
         {
             /* get down */

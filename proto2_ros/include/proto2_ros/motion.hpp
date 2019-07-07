@@ -35,6 +35,10 @@ public:
     void turn_right(void);
     void turn_left(void);
 
+    /* punch */
+    void punch_right(void);
+    void punch_left(void);
+
     /* get down */
     void get_down(void);
 
