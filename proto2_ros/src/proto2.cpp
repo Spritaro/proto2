@@ -76,6 +76,16 @@ void Proto2::whole_control(void)
             }
             motion.crouch_little();
         }
+        else if(motion.joy.buttons[motion.BUTTON_LB] == 1)
+        {
+            /* left turn */
+            while(ros::ok())
+            {
+                motion.turn_left();
+                if(motion.joy.buttons[motion.BUTTON_LB] != 1) break;
+            }
+            motion.crouch_little();
+        }
         else if(motion.joy.buttons[motion.BUTTON_B] == 1)
         {
             /* punch right */
@@ -100,15 +110,14 @@ void Proto2::whole_control(void)
                 if(motion.joy.buttons[motion.BUTTON_A] != 1) break;
             }
         }
-        else if(motion.joy.buttons[motion.BUTTON_LB] == 1)
+        else if(motion.joy.buttons[motion.BUTTON_BACK] == 1)
         {
-            /* left turn */
+            /* poweroff servos */
             while(ros::ok())
             {
-                motion.turn_left();
-                if(motion.joy.buttons[motion.BUTTON_LB] != 1) break;
+                motion.poweroff_servos();
+                if(motion.joy.buttons[motion.BUTTON_START] == 1) break;
             }
-            motion.crouch_little();
         }
         else if(motion.joy.buttons[motion.BUTTON_LT] == 1 && motion.joy.buttons[motion.BUTTON_Y] == 1)
         {

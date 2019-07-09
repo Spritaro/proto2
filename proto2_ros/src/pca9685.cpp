@@ -115,7 +115,12 @@ void Servo::ik(const double x, const double y, const double z, const double a, d
 
 void Servo::poweroff_servos(void)
 {
-    // TODO
+    for(int i=0; i<SERVONUM; i++)
+    {
+        set_pwm(i, 0);
+    }
+    ros::spinOnce();
+    loop_rate.sleep();
 }
 
 /* only set target angles */
