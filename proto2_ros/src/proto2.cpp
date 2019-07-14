@@ -18,7 +18,17 @@ void Proto2::whole_control(void)
     {
         ros::spinOnce();
 
-        if(motion.joy.axes[motion.STICK_LY] > 0)
+        if(motion.joy.buttons[motion.BUTTON_LT] == 1 && motion.joy.buttons[motion.BUTTON_Y] == 1)
+        {
+            /* getup front */
+            motion.getup_front();
+        }
+        else if(motion.joy.buttons[motion.BUTTON_LT] == 1 && motion.joy.buttons[motion.BUTTON_A] == 1)
+        {
+            /* getup back */
+            motion.getup_back();
+        }
+        else if(motion.joy.axes[motion.STICK_LY] > 0)
         {
             /* forward */
             motion.walk_forward_pre();
@@ -118,16 +128,6 @@ void Proto2::whole_control(void)
                 motion.poweroff_servos();
                 if(motion.joy.buttons[motion.BUTTON_START] == 1) break;
             }
-        }
-        else if(motion.joy.buttons[motion.BUTTON_LT] == 1 && motion.joy.buttons[motion.BUTTON_Y] == 1)
-        {
-            /* getup front */
-            motion.getup_front();
-        }
-        else if(motion.joy.buttons[motion.BUTTON_LT] == 1 && motion.joy.buttons[motion.BUTTON_A] == 1)
-        {
-            /* getup back */
-            motion.getup_back();
         }
         else
         {
