@@ -77,9 +77,9 @@ RUN git clone git://git.drogon.net/wiringPi && \
     ./build
 
 WORKDIR /root/catkin_ws
-CMD udevadm control --reload-rules && udevadm trigger && \
-    /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash ; \
+#CMD udevadm control --reload-rules && udevadm trigger && \
+CMD /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash ; \
     catkin_make ; \
-    source /root/catkin_ws/devel/setup.bash"
-#    roslaunch proto2_ros bringup.launch
+    source /root/catkin_ws/devel/setup.bash ; \
+    roslaunch proto2_ros bringup.launch"
 
