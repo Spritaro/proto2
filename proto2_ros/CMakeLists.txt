@@ -205,3 +205,6 @@ target_link_libraries(mpu9250 ${catkin_LIBRARIES} wiringPi)
 
 add_executable(proto2 src/proto2.cpp src/motion.cpp src/vr_head_control.cpp src/pca9685.cpp)
 target_link_libraries(proto2 ${catkin_LIBRARIES} wiringPi)
+
+add_executable(servo_range_check src/servo_range_check.cpp src/pca9685.cpp)
+target_link_libraries(servo_range_check ${catkin_LIBRARIES} wiringPi)
