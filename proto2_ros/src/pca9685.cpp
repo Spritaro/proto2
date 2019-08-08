@@ -9,7 +9,7 @@
 /* initialize parameters */
 const double Servo::channels[] = {0,1,2,3, 7,6,5,4, 13,14,15, 10,9,8, 11,12};
 const double Servo::ccws[]     = {1,1,-1,1, -1,1,-1,-1, -1,-1,1, 1,1,-1, 1,1};
-const double Servo::offsets[]  = {-15,-42,70,-40, 78,60,-20,77, 23,5,-4, 15,58,52, 26,36};
+const double Servo::offsets[]  = {-18*2,-64,-39,-30*2, -22*2,21,42,-22*2, 5,20,-30, -13,27,-22, 0,15};
 
 double Servo::current_degs[Servo::SERVONUM];
 double Servo::end_degs[Servo::SERVONUM];
@@ -165,7 +165,7 @@ void Servo::move_servos(const unsigned int duration)
         // move servos
         // ROS_INFO("move servos");
         for(int id = 0; id < SERVONUM; id++)
-            set_pwm( channels[id], deg2width(degs_tmp[id]*ccws[id]+offsets[id]) );
+            set_pwm( channels[id], deg2width((degs_tmp[id]+offsets[id])*ccws[id]) );
 
         ros::spinOnce();
         loop_rate.sleep();

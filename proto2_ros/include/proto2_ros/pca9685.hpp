@@ -45,8 +45,8 @@ private:
     static const unsigned int SERVONUM = 16;
     static const double DEGMIN = -90.0;
     static const double DEGMAX = 90.0;
-    static const double SERVOMIN = 103.0;
-    static const double SERVOMAX = 490.0;
+    static const double SERVOMIN = 139.8;
+    static const double SERVOMAX = 565.5;
 
     static const double channels[];
     static const double ccws[];
