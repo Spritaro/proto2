@@ -61,7 +61,7 @@ void Proto2::whole_control(void)
             while(ros::ok())
             {
                 motion.walk_right();
-                if(motion.joy.buttons[motion.STICK_LX] >= 0) break;
+                if(motion.joy.axes[motion.STICK_LX] >= 0) break;
             }
             motion.crouch_little();
         }
@@ -72,7 +72,7 @@ void Proto2::whole_control(void)
             while(ros::ok())
             {
                 motion.walk_left();
-                if(motion.joy.buttons[motion.STICK_LX] <= 0) break;
+                if(motion.joy.axes[motion.STICK_LX] <= 0) break;
             }
             motion.crouch_little();
         }
