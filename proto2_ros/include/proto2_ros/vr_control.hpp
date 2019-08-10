@@ -12,6 +12,8 @@ private:
     void vr_right_hand_callback(const geometry_msgs::PoseStamped posestamped);
     void vr_left_hand_callback(const geometry_msgs::PoseStamped posestamped);
 
+    void ik_for_left_hand(double x, double y, double z, double *degs);
+
     static const double angle_yaw_min = -60;
     static const double angle_yaw_max =  60;
     static const double angle_pitch_min = -45;

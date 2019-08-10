@@ -14,18 +14,6 @@ private:
             dst[id] = src[id];
     }
 
-    /* convert degrees to radians */
-    inline double radians(double deg)
-    {
-        return ( deg * M_PI / 180.0 );
-    }
-
-    /* convert degrees to radians */
-    inline double degrees(double rad)
-    {
-        return ( rad * 180.0 / M_PI );
-    }
-
     /* convert angles in degrees to pulses width in 2048 resolution */
     inline unsigned int deg2width(const double deg)
     {
@@ -60,6 +48,18 @@ private:
 public:
     Servo(void);
     ~Servo(void);
+
+    /* convert degrees to radians */
+    inline double radians(double deg)
+    {
+        return ( deg * M_PI / 180.0 );
+    }
+
+    /* convert degrees to radians */
+    inline double degrees(double rad)
+    {
+        return ( rad * 180.0 / M_PI );
+    }
 
     /* power off all servos */
     void poweroff_servos(void);
