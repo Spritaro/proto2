@@ -65,7 +65,6 @@ public:
     void poweroff_servos(void);
 
     /* set servo angles without moving */
-    void set_head_angles(const double target_deg_yaw, const double target_deg_pitch);
     void set_body_angles(const double *target_degs);
 
     /* move all servos to set angles */
@@ -75,6 +74,10 @@ public:
     void set_and_move_servos(const double *target_degs);
     void set_and_move_servos(const unsigned int duration, const double *target_degs);
     void set_and_move_servos(const unsigned int duration, const double *target_poss, const double *target_degs);
+
+    static double vr_control_degs[];
+    static bool is_vr_control_enabled;
+    static const bool is_vr_control_applicable[];
 };
 
 #endif

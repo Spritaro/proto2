@@ -2,7 +2,7 @@
 #define PROTO2_HPP
 
 #include "proto2_ros/motion.hpp"
-#include "proto2_ros/vr_head_control.hpp"
+#include "proto2_ros/vr_control.hpp"
 #include <ros/ros.h>
 
 class Proto2
@@ -18,7 +18,7 @@ public:
 
     /* sub modules */
     Motion motion;
-    VrHeadControl vr_head_control;
+    VrControl vr_control;
 };
 
 #endif /* PROTO2_HPP */

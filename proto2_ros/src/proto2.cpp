@@ -3,14 +3,14 @@
 /* constructor */
 Proto2::Proto2(ros::NodeHandle n) :
     motion(n),
-    vr_head_control(n)
+    vr_control(n)
 {
 }
 
 void Proto2::whole_control(void)
 {
     /* initial setting*/
-    vr_head_control.enable_vr_head_control();
+    vr_control.enable_vr_control();
 
     /* main loop */
     ROS_INFO("Start main loop");

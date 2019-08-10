@@ -11,6 +11,11 @@ const double Servo::channels[] = {0,1,2,3, 7,6,5,4, 13,14,15, 10,9,8, 11,12};
 const double Servo::ccws[]     = {1,1,-1,1, -1,1,-1,-1, -1,-1,1, 1,1,-1, 1,1};
 const double Servo::offsets[]  = {-18*2,-64,-39,-30*2, -22*2,21,42,-22*2, 5,20,-30, -13,27,-22, 0,15};
 
+double Servo::vr_control_degs[] = {0,0,0,0, 0,0,0,0, 0,0,0, 0,0,0, 0,0};
+bool Servo::is_vr_control_enabled = true;
+const bool Servo::is_vr_control_applicable[] = {false,false,false,false, false,false,false,false, 
+                                                true,true,true, true,true,true, true,true};
+
 double Servo::current_degs[Servo::SERVONUM];
 double Servo::end_degs[Servo::SERVONUM];
 
@@ -124,15 +129,9 @@ void Servo::poweroff_servos(void)
 }
 
 /* only set target angles */
-void Servo::set_head_angles(const double target_deg_yaw, const double target_deg_pitch)
-{
-    end_degs[SERVONUM-2] = target_deg_yaw;
-    end_degs[SERVONUM-1] = target_deg_pitch;
-}
-
 void Servo::set_body_angles(const double *target_degs)
 {
-    copy_array(end_degs, target_degs, 0, SERVONUM-2);
+    copy_array(end_degs, target_degs, 0, SERVONUM);
 }
 
 /* move servos to set target angles */
@@ -161,6 +160,12 @@ void Servo::move_servos(const unsigned int duration)
         degs_tmp[3] *= 2.0;
         degs_tmp[4] *= 2.0;
         degs_tmp[7] *= 2.0;
+
+        // override servo angles if vr control is enabled
+        if(is_vr_control_enabled == true)
+            for(int id = 0; id < SERVONUM; id++)
+                if(is_vr_control_applicable[id] == true)
+                    degs_tmp[id] = vr_control_degs[id];
 
         // move servos
         // ROS_INFO("move servos");
@@ -202,9 +207,9 @@ void Servo::set_and_move_servos(const unsigned int duration, const double *targe
         target_degs_tmp[id] = left_leg_degs[id];
         target_degs_tmp[id+4] = -right_leg_degs[id];
     }
-    for(int id = 0; id < 6; id++)
+    for(int id = 8; id < SERVONUM; id++)
     {
-        target_degs_tmp[id+8] = target_degs[id];
+        target_degs_tmp[id] = target_degs[id];
     }
 
     /* set and move servos */
