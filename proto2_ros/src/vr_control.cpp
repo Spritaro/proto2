@@ -75,8 +75,8 @@ void VrControl::vr_head_callback(const geometry_msgs::PoseStamped posestamped)
     tf2::Matrix3x3(quaternion).getEulerYPR(yaw_tmp, pitch_tmp, roll_tmp);
 
     // convert radians to degrees
-    roll  =  pitch_tmp * 180.0 / M_PI;
-    pitch = -roll_tmp  * 180.0 / M_PI;
+    roll  =  roll_tmp  * 180.0 / M_PI;
+    pitch =  pitch_tmp * 180.0 / M_PI;
     yaw   =  yaw_tmp   * 180.0 / M_PI;
 
     // limit
