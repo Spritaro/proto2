@@ -10,7 +10,7 @@ Proto2::Proto2(ros::NodeHandle n) :
 void Proto2::whole_control(void)
 {
     /* initial setting*/
-    vr_control.enable_vr_control();
+    vr_control.disable_vr_control();
 
     /* main loop */
     ROS_INFO("Start main loop");
@@ -18,17 +18,46 @@ void Proto2::whole_control(void)
     {
         ros::spinOnce();
 
-        if(motion.joy.buttons[motion.BUTTON_LT] == 1 && motion.joy.buttons[motion.BUTTON_Y] == 1)
+        /* right trigger special actions */
+        if(motion.joy.buttons[motion.BUTTON_RT] == 1)
         {
-            /* getup front */
-            motion.getup_front();
+            if(motion.joy.buttons[motion.BUTTON_A] == 1)
+                vr_control.enable_vr_control();
+
+            else if(motion.joy.buttons[motion.BUTTON_B] == 1)
+                vr_control.disable_vr_control();
+
+            continue;
         }
-        else if(motion.joy.buttons[motion.BUTTON_LT] == 1 && motion.joy.buttons[motion.BUTTON_A] == 1)
+        if(vr_control.vr_joy.axes[vr_control.VR_TRIGGER_HR] > 0.5)
         {
-            /* getup back */
-            motion.getup_back();
+            if(vr_control.vr_joy.buttons[vr_control.VR_BUTTON_A] == 1)
+                vr_control.enable_vr_control();
+
+            else if(vr_control.vr_joy.buttons[vr_control.VR_BUTTON_B] == 1)
+                vr_control.disable_vr_control();
+
+            continue;
         }
-        else if(motion.joy.axes[motion.STICK_LY] > 0)
+
+        /* left trigger special actions */
+        if(motion.joy.buttons[motion.BUTTON_LT] == 1)
+        {
+            if(motion.joy.buttons[motion.BUTTON_Y] == 1)
+            {
+                /* getup front */
+                motion.getup_front();
+            }
+            else if(motion.joy.buttons[motion.BUTTON_A] == 1)
+            {
+                /* getup back */
+                motion.getup_back();
+            }
+            continue;
+        }
+
+        /* normal motions */
+        if(motion.joy.axes[motion.STICK_LY] > 0)
         {
             /* forward */
             motion.walk_forward_pre();

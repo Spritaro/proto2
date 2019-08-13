@@ -6,9 +6,9 @@ Motion::Motion(ros::NodeHandle n)
     sub = n.subscribe("joy", 1, &Motion::joy_callback, this);
 
     // create empty joy message
-    for(uint8_t i=0; i<12; i++)
+    for(uint8_t i=0; i<BUTTON_NUM; i++)
         joy.buttons.push_back(0);
-    for(uint8_t i=0; i<6; i++)
+    for(uint8_t i=0; i<AXIS_NUM; i++)
         joy.axes.push_back(0.0);
 }
 

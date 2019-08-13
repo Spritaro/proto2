@@ -12,7 +12,7 @@ const double Servo::ccws[]     = {1,1,-1,1, -1,1,-1,-1, -1,-1,1, 1,1,-1, 1,1};
 const double Servo::offsets[]  = {-18*2,-64,-39,-30*2, -22*2,21,42,-22*2, 5,20,-30, -13,27,-22, 0,15};
 
 double Servo::vr_control_degs[] = {0,0,0,0, 0,0,0,0, 0,0,0, 0,0,0, 0,0};
-bool Servo::is_vr_control_enabled = true;
+bool Servo::is_vr_control_enabled = false;
 const bool Servo::is_vr_control_applicable[] = {false,false,false,false, false,false,false,false, 
                                                 true,true,true, true,true,true, true,true};
 
@@ -207,9 +207,9 @@ void Servo::set_and_move_servos(const unsigned int duration, const double *targe
         target_degs_tmp[id] = left_leg_degs[id];
         target_degs_tmp[id+4] = -right_leg_degs[id];
     }
-    for(int id = 8; id < SERVONUM; id++)
+    for(int id = 0; id < 8; id++)
     {
-        target_degs_tmp[id] = target_degs[id];
+        target_degs_tmp[id+8] = target_degs[id];
     }
 
     /* set and move servos */

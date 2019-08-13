@@ -71,6 +71,7 @@ public:
     static const uint8_t BUTTON_START = 9;
     static const uint8_t BUTTON_LS = 10;
     static const uint8_t BUTTON_RS = 11;
+    static const uint8_t BUTTON_NUM = 12;
 
     static const uint8_t STICK_LX = 0;
     static const uint8_t STICK_LY = 1;
@@ -78,6 +79,7 @@ public:
     static const uint8_t STICK_RY = 3;
     static const uint8_t CROSS_X = 4;
     static const uint8_t CROSS_Y = 5;
+    static const uint8_t AXIS_NUM = 6;
 };
 
 #endif /* MOTION_HPP */

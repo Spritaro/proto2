@@ -8,6 +8,13 @@ VrControl::VrControl(ros::NodeHandle n)
     sub_head       = n.subscribe("/oculus/head_set/pose_stamped",         1, &VrControl::vr_head_callback,       this);
     sub_right_hand = n.subscribe("/oculus/right_controller/pose_stamped", 1, &VrControl::vr_right_hand_callback, this);
     sub_left_hand  = n.subscribe("/oculus/left_controller/pose_stamped",  1, &VrControl::vr_left_hand_callback,  this);
+    sub_joy        = n.subscribe("/oculus/joy",                           1, &VrControl::vr_joy_callback,        this);
+
+    // create empty joy message
+    for(uint8_t i=0; i<VR_BUTTON_NUM; i++)
+        vr_joy.buttons.push_back(0);
+    for(uint8_t i=0; i<VR_AXIS_NUM; i++)
+        vr_joy.axes.push_back(0.0);
 }
 
 void VrControl::ik_for_left_hand(double x, double y, double z, double *degs)
@@ -169,6 +176,13 @@ void VrControl::vr_left_hand_callback(const geometry_msgs::PoseStamped posestamp
     vr_control_degs[8] = left_arm_degs[0];
     vr_control_degs[9] = left_arm_degs[1];
     vr_control_degs[10] = left_arm_degs[2];
+}
+
+/* update gamepad input */
+void VrControl::vr_joy_callback(const sensor_msgs::Joy joy_tmp)
+{
+    // ROS_INFO("%d %d %d %d", joy_tmp.buttons[0], joy_tmp.buttons[1], joy_tmp.buttons[2], joy_tmp.buttons[3]);
+    vr_joy = joy_tmp;
 }
 
 void VrControl::enable_vr_control(void)
