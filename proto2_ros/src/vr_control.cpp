@@ -5,9 +5,9 @@
 
 VrControl::VrControl(ros::NodeHandle n)
 {
-    sub_head = n.subscribe("/oculus/head_set/pose_stamped", 1, &VrControl::vr_head_callback, this);
+    sub_head       = n.subscribe("/oculus/head_set/pose_stamped",         1, &VrControl::vr_head_callback,       this);
     sub_right_hand = n.subscribe("/oculus/right_controller/pose_stamped", 1, &VrControl::vr_right_hand_callback, this);
-    sub_left_hand = n.subscribe("/oculus/left_controller/pose_stamped", 1, &VrControl::vr_left_hand_callback, this);
+    sub_left_hand  = n.subscribe("/oculus/left_controller/pose_stamped",  1, &VrControl::vr_left_hand_callback,  this);
 }
 
 void VrControl::ik_for_left_hand(double x, double y, double z, double *degs)
@@ -93,20 +93,42 @@ void VrControl::vr_head_callback(const geometry_msgs::PoseStamped posestamped)
 
 void VrControl::vr_right_hand_callback(const geometry_msgs::PoseStamped posestamped)
 {
-    ROS_INFO("VR right hand");
+    ROS_INFO("VR right hand xyz %d %d %d", static_cast<int>(posestamped.pose.position.x*1000),
+                                          static_cast<int>(posestamped.pose.position.y*1000),
+                                          static_cast<int>(posestamped.pose.position.z*1000));
 
     // if disabled, do not update angles
     if(is_vr_control_enabled == false)
         return;
-
-    // solve IK
+    
+    // solve IK (use ik_for_left_hand function)
+    double right_arm_degs[3];
+    ik_for_left_hand(posestamped.pose.position.x,
+                     -posestamped.pose.position.y,
+                     posestamped.pose.position.z, right_arm_degs);
+    right_arm_degs[1] -= 90;
+    right_arm_degs[2] -= 90;
 
     // limit
+    if(right_arm_degs[0] < -90)
+        right_arm_degs[0]= -90;
+    else if(right_arm_degs[0] > 90)
+        right_arm_degs[0]= 90;
+
+    if(right_arm_degs[1] < -90)
+        right_arm_degs[1]= -90;
+    else if(right_arm_degs[0] > 90)
+        right_arm_degs[1]= 90;
+
+    if(right_arm_degs[2] < -30)
+        right_arm_degs[2]= -30;
+    else if(right_arm_degs[2] > 90)
+        right_arm_degs[2]= 90;
     
     // set head angles
-    vr_control_degs[11] = 0;
-    vr_control_degs[12] = 0;
-    vr_control_degs[13] = 0;
+    vr_control_degs[11] = right_arm_degs[0];
+    vr_control_degs[12] = right_arm_degs[1];
+    vr_control_degs[13] = right_arm_degs[2];
 }
 
 void VrControl::vr_left_hand_callback(const geometry_msgs::PoseStamped posestamped)
