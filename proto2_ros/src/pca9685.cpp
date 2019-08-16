@@ -9,7 +9,7 @@
 /* initialize parameters */
 const double Servo::channels[] = {0,1,2,3, 7,6,5,4, 13,14,15, 10,9,8, 11,12};
 const double Servo::ccws[]     = {1,1,-1,1, -1,1,-1,-1, -1,-1,1, 1,1,-1, 1,1};
-const double Servo::offsets[]  = {-36,-80,-85,-60, -44,71,88,-44, 5,20,-30, -13,27,-22, 0,15};
+const double Servo::offsets[]  = {-36,-80,-85,-60, -44,73,90,-44, 5,20,-30, -13,27,-22, 0,15};
 
 double Servo::vr_control_degs[] = {0,0,0,0, 0,0,0,0, 0,0,0, 0,0,0, 0,0};
 bool Servo::is_vr_control_enabled = false;

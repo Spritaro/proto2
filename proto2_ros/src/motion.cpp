@@ -25,18 +25,18 @@ void Motion::walk_forward_pre(void)
     // 最初の屈伸
     double poss[8] = {  0,20,-250,0,   0,-20,-240,0};
     double degs[8] = {  0,-45,45,      0,-45,45,  0,0};
-    set_and_move_servos(60, poss, degs);
+    set_and_move_servos(70, poss, degs);
 }
 
 void Motion::walk_forward_1(void)
 {
     // 右に傾斜
-    double poss0[8] = {  0,20,-210,0,   0,-20,-250,0};
+    double poss0[8] = { -5,20,-230,0,  -5,-20,-250,0};
     double degs0[8] = {  0,-45,45,      0,-45,45,  0,0};
     set_and_move_servos(60, poss0, degs0);
 
     // 屈伸
-    double poss1[8] = { 20,20,-250,0, -20,-20,-250,0};
+    double poss1[8] = { 15,20,-250,0, -25,-20,-250,0};
     double degs1[8] = {  0,-45,45,      0,-45,45,  0,0};
     set_and_move_servos(60, poss1, degs1);
 }
@@ -44,12 +44,12 @@ void Motion::walk_forward_1(void)
 void Motion::walk_forward_2(void)
 {
     // 左に傾斜
-    double poss0[8] = {  0,20,-250,0,   0,-20,-210,0};
+    double poss0[8] = { -5,20,-250,0,  -5,-20,-230,0};
     double degs0[8] = {  0,-45,45,      0,-45,45,  0,0};
     set_and_move_servos(60, poss0, degs0);
 
     // 屈伸
-    double poss1[8] = {-20,20,-250,0,  20,-20,-250,0};
+    double poss1[8] = {-25,20,-250,0,  15,-20,-250,0};
     double degs1[8] = {  0,-45,45,      0,-45,45,  0,0};
     set_and_move_servos(60, poss1, degs1);
 }
@@ -66,7 +66,7 @@ void Motion::walk_backward_pre(void)
 void Motion::walk_backward_1(void)
 {
     // 右に傾斜
-    double poss0[8] = {  0,20,-210,0,   0,-20,-250,0};
+    double poss0[8] = {  0,20,-230,0,   0,-20,-250,0};
     double degs0[8] = {  0,-45,45,      0,-45,45,  0,0};
     set_and_move_servos(60, poss0, degs0);
 
@@ -79,7 +79,7 @@ void Motion::walk_backward_1(void)
 void Motion::walk_backward_2(void)
 {
     // 左に傾斜
-    double poss0[8] = {  0,20,-250,0,   0,-20,-210,0};
+    double poss0[8] = {  0,20,-250,0,   0,-20,-230,0};
     double degs0[8] = {  0,-45,45,      0,-45,45,  0,0};
     set_and_move_servos(60, poss0, degs0);
 
@@ -101,7 +101,7 @@ void Motion::walk_right_pre(void)
 void Motion::walk_right(void)
 {
     // 右に傾斜
-    double poss0[8] = {  0,20,-210,0,   0,-20,-250,0};
+    double poss0[8] = {  0,20,-230,0,   0,-20,-250,0};
     double degs0[8] = {  0,-45,45,      0,-45,45,  0,0};
     set_and_move_servos(60, poss0, degs0);
 
@@ -111,7 +111,7 @@ void Motion::walk_right(void)
     set_and_move_servos(60, poss1, degs1);
 
     // 左に傾斜
-    double poss2[8] = {  0,20,-250,0,   0,-20,-210,0};
+    double poss2[8] = {  0,20,-250,0,   0,-20,-230,0};
     double degs2[8] = {  0,-45,45,      0,-45,45,  0,0};
     set_and_move_servos(60, poss2, degs2);
 
@@ -177,6 +177,7 @@ void Motion::crouch_little(void)
 {
     double poss[8] = {0.,20.,-230.,0., 0.,-20.,-230.,0.};
     double degs[8] = {0.,-45.,45., 0.,-45.,45.,  0,0};
+    set_and_move_servos(100, poss, degs);
     set_and_move_servos(100, poss, degs);
 }
 
