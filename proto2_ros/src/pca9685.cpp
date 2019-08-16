@@ -9,7 +9,7 @@
 /* initialize parameters */
 const double Servo::channels[] = {0,1,2,3, 7,6,5,4, 13,14,15, 10,9,8, 11,12};
 const double Servo::ccws[]     = {1,1,-1,1, -1,1,-1,-1, -1,-1,1, 1,1,-1, 1,1};
-const double Servo::offsets[]  = {-18*2,-64,-39,-30*2, -22*2,21,42,-22*2, 5,20,-30, -13,27,-22, 0,15};
+const double Servo::offsets[]  = {-36,-80,-85,-60, -44,71,88,-44, 5,20,-30, -13,27,-22, 0,15};
 
 double Servo::vr_control_degs[] = {0,0,0,0, 0,0,0,0, 0,0,0, 0,0,0, 0,0};
 bool Servo::is_vr_control_enabled = false;
@@ -157,8 +157,12 @@ void Servo::move_servos(const unsigned int duration)
         for(int id = 0; id < SERVONUM; id++)
             degs_tmp[id] = current_degs[id];
         degs_tmp[0] *= 2.0;
+        degs_tmp[1] *= 2.0;
+        degs_tmp[2] *= 2.0;
         degs_tmp[3] *= 2.0;
         degs_tmp[4] *= 2.0;
+        degs_tmp[5] *= 2.0;
+        degs_tmp[6] *= 2.0;
         degs_tmp[7] *= 2.0;
 
         // override servo angles if vr control is enabled
