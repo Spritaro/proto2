@@ -69,17 +69,63 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc && \
     echo "source /root/catkin_rs/devel/setup.bash" >> ~/.bashrc && \
     echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
-RUN pip install numpy
-
 # Install WiringPi
-RUN git clone git://git.drogon.net/wiringPi && \
-    cd wiringPi && \
+RUN git clone https://github.com/WiringPi/WiringPi.git && \
+    cd WiringPi && \
     ./build
 
+# install tensorflow
+WORKDIR /root
+RUN apt-get update && apt-get install -y \
+    libhdf5-dev \
+    software-properties-common
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    python get-pip.py
+RUN wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v1.10.0/tensorflow-1.10.0-cp27-none-linux_armv7l.whl && \
+    pip install --ignore-installed enum34 && \
+    pip install tensorflow-1.10.0-cp27-none-linux_armv7l.whl
+
+ENV MATPLOTLIB_VERSION 2.0.2
+RUN pip install \
+    Cython \
+    contextlib2 \
+    jupyter \
+    matplotlib==$MATPLOTLIB_VERSION
+
+# download Object Detection API
+WORKDIR /usr/src
+RUN mkdir tensorflow && \
+    cd tensorflow && \
+    git clone https://github.com/tensorflow/models.git && \
+    cd models && \
+    git checkout b07b494e3514553633b132178b4c448f994d59df
+
+# install COCO API
+WORKDIR /usr/src/tensorflow/models/research
+RUN git clone https://github.com/cocodataset/cocoapi.git && \
+    cd cocoapi/PythonAPI && \
+    make && \
+    cp -r pycocotools /usr/src/tensorflow/models/research
+
+# protobuff installation
+#WORKDIR /usr/src/tensorflow/models/research
+#RUN wget -O protobuf.zip https://github.com/google/protobuf/releases/download/v3.0.0/protoc-3.0.0-linux-x86_32.zip && \
+#    unzip protobuf.zip && \
+#    ./bin/protoc object_detection/protos/*.proto --python_out=.
+RUN apt-get update && apt-get install -y \
+    protobuf-compiler
+
+# Upgrading GLIBCXX
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test && \
+    apt-get update && apt-get install -y libstdc++6
+
+# add libraries to PYTHONPATH
+ENV PYTHONPATH=$PYTHONPATH:/usr/src/tensorflow/models/research:/usr/src/tensorflow/models/research/slim
+
+# default command
 WORKDIR /root/catkin_ws
 #CMD udevadm control --reload-rules && udevadm trigger && \
 CMD /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash ; \
     catkin_make ; \
     source /root/catkin_ws/devel/setup.bash ; \
     roslaunch proto2_ros bringup.launch"
-

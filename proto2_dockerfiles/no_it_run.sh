@@ -9,4 +9,4 @@ docker run \
     --env="DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-    ros-cpp-2.22.0-2.2.6
+    ros-cpp-tf
