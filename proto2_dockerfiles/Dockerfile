@@ -108,12 +108,25 @@ RUN git clone https://github.com/cocodataset/cocoapi.git && \
     cp -r pycocotools /usr/src/tensorflow/models/research
 
 # protobuff installation
-#WORKDIR /usr/src/tensorflow/models/research
+WORKDIR /usr/src/tensorflow/models/research
 #RUN wget -O protobuf.zip https://github.com/google/protobuf/releases/download/v3.0.0/protoc-3.0.0-linux-x86_32.zip && \
 #    unzip protobuf.zip && \
 #    ./bin/protoc object_detection/protos/*.proto --python_out=.
-RUN apt-get update && apt-get install -y \
-    protobuf-compiler
+#RUN apt-get update && apt-get install -y \
+#    protobuf-compiler \
+# && protoc object_detection/protos/*.proto --python_out=.
+RUN apt-get update && apt-get install -y autoconf automake libtool curl make g++ unzip
+RUN git clone https://github.com/google/protobuf.git && \
+    cd protobuf && \
+    git checkout v3.6.0 && \
+    git submodule update --init --recursive && \
+    ./autogen.sh && \
+    ./configure && \
+    make && \
+    make check && \
+    make install && \
+    ldconfig
+RUN protoc object_detection/protos/*.proto --python_out=.
 
 # Upgrading GLIBCXX
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test && \
