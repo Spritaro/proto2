@@ -4,11 +4,11 @@ docker run \
     -it \
     --rm \
     --privileged \
+    --net=host \
     -v /home/pi/.ros/:/root/.ros/ \
     -v /home/pi/catkin_ws/:/root/catkin_ws/ \
     -p 9090:9090 \
-    --env="DISPLAY" \
-    --env="QT_X11_NO_MITSHM=1" \
-    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+    --env ROS_IP=192.168.13.100 \
+    --env ROS_MASTER_URI=http://192.168.13.100:11311 \
     ros-cpp-tf \
     bash
