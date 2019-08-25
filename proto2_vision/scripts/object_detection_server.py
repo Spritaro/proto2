@@ -75,7 +75,7 @@ class ObjectDetectionServer(object):
         rospy.loginfo("start executing object detection")
 
         # Convert image message to numpy array
-        image_np = self.bridge.imgmsg_to_cv2(goal.image, desired_encoding="passthrough")
+        image_np = self.bridge.imgmsg_to_cv2(goal.image, desired_encoding="rgb8")
         image_np = cv2.resize(image_np, (self.w, self.h))
         image_np_expanded = np.expand_dims(image_np, axis=0)
 
@@ -97,7 +97,7 @@ class ObjectDetectionServer(object):
             line_thickness=8,
             min_score_thresh=.5)
 
-        image_msg = self.bridge.cv2_to_imgmsg(image_np)
+        image_msg = self.bridge.cv2_to_imgmsg(image_np, encoding='rgb8')
         self.pub.publish(image_msg)
 
         # Set result
