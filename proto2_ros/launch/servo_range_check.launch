@@ -1,9 +1,0 @@
-<launch>
-
-    <!-- Joy -->
-    <node pkg="joy" type="joy_node" name="joy_node" />
-
-    <!-- servo range check -->
-    <node pkg="proto2_ros" type="servo_range_check" name="servo_range_check" output="screen" />
-
-</launch>

@@ -1,0 +1,7 @@
+#goal definition
+sensor_msgs/Image image
+---
+#result definition
+Rect[] rects
+---
+#feedback
