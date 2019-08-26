@@ -18,6 +18,7 @@ from object_detection.utils import ops as utils_ops
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 from proto2_msgs.msg import ObjectDetectionAction, ObjectDetectionFeedback, ObjectDetectionResult
+from proto2_msgs.msg import Rect
 from sensor_msgs.msg import Image
 
 class ObjectDetectionServer(object):
@@ -47,7 +48,6 @@ class ObjectDetectionServer(object):
 
 
     def init_action(self, action_name):
-        self.object_detection_result = ObjectDetectionResult()
         self.object_detection_server = actionlib.SimpleActionServer(
             action_name,
             ObjectDetectionAction,
@@ -101,8 +101,21 @@ class ObjectDetectionServer(object):
         self.pub.publish(image_msg)
 
         # Set result
-        self.object_detection_result.rects = []
-        self.object_detection_server.set_succeeded(self.object_detection_result)
+        object_detection_result = ObjectDetectionResult()
+        object_detection_result.rects = []
+        for i in range(output_dict['num_detections']):
+            if output_dict['detection_classes'][i] not in self.category_index:
+                continue
+            rect = Rect()
+            rect.class_id = output_dict['detection_classes'][i]
+            rect.class_name = self.category_index[output_dict['detection_classes'][i]]['name']
+            rect.score = output_dict['detection_scores'][i]
+            rect.ymin = output_dict['detection_boxes'][i][0]
+            rect.xmin = output_dict['detection_boxes'][i][1]
+            rect.ymax = output_dict['detection_boxes'][i][2]
+            rect.xmax = output_dict['detection_boxes'][i][3]
+            object_detection_result.rects.append(rect)
+        self.object_detection_server.set_succeeded(object_detection_result)
         return
 
 

@@ -1,6 +1,7 @@
 int32 class_id
 string class_name
-int32 x
-int32 y
-int32 width
-int32 height
+float32 score
+float32 ymin
+float32 xmin
+float32 ymax
+float32 xmax

@@ -39,6 +39,6 @@ if __name__ == '__main__':
     rospy.loginfo("waiting for action")
     client.wait_for_result()
 
-    print(client.get_result)
+    print(client.get_result())
     rospy.loginfo("done")
 
