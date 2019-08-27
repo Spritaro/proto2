@@ -44,15 +44,20 @@ void Proto2::whole_control(void)
         if(motion.joy.buttons[motion.BUTTON_LT] == 1)
         {
             if(motion.joy.buttons[motion.BUTTON_Y] == 1)
-            {
-                /* getup front */
                 motion.getup_front();
-            }
+
             else if(motion.joy.buttons[motion.BUTTON_A] == 1)
-            {
-                /* getup back */
                 motion.getup_back();
-            }
+
+            while(ros::ok() && motion.joy.buttons[motion.BUTTON_B] == 1)
+                motion.t_pose();
+            
+            while(ros::ok() && motion.joy.buttons[motion.BUTTON_X] == 1)
+                motion.holdup_pose();
+            
+            while(ros::ok() && motion.joy.buttons[motion.BUTTON_RB] == 1)
+                motion.fighting_pose();
+
             continue;
         }
 

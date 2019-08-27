@@ -6,6 +6,7 @@ import rospy
 
 from copy import deepcopy
 from proto2_msgs.msg import ObjectDetectionAction, ObjectDetectionGoal, ObjectDetectionResult
+from proto2_msgs.msg import Rect
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import Joy
 
@@ -44,19 +45,39 @@ class StrategyForPreliminary(object):
             rospy.loginfo("waiting for action")
             self.client.wait_for_result()
 
-            # parse result
-            result = self.client.get_result()
-            for rect in result.rects:
-                if rect.score > 0.5:
-                    rospy.loginfo(rect)
-
             # end object detection
             self.is_busy = False
 
-            # send motion
+            # parse result
+            rects = []
+            result = self.client.get_result()
+            for rect in result.rects:
+                if rect.score > 0.5:
+                    rects.append(rect)
+            
+            highest_score_rect = Rect()
+            highest_score_rect.score = 0.0
+            for rect in rects:
+                if rect.score > highest_score_rect.score:
+                    highest_score_rect = rect
 
-            # wait for motion to finish
-            rospy.sleep(1.0)
+            rospy.loginfo(highest_score_rect)
+
+            # send motion
+            joy = Joy()
+            joy.axes = [0.0] * 6
+            joy.buttons = [0,0,0,0, 0,0,0,0, 0,0, 0,0]
+            if highest_score_rect.class_name == "robot":
+                joy.buttons = [0,0,0,0, 0,1,1,0, 0,0, 0,0]
+            elif highest_score_rect.class_name == "robot_down":
+                joy.buttons = [1,0,0,0, 0,0,1,0, 0,0, 0,0]
+            elif highest_score_rect.class_name == "referee":
+                joy.buttons = [0,0,1,0, 0,0,1,0, 0,0, 0,0]
+
+            rospy.loginfo(joy)
+            for i in range(5):
+                self.pub.publish(joy)
+                rospy.sleep(0.1)
 
 
 if __name__ == '__main__':

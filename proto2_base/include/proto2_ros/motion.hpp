@@ -48,6 +48,11 @@ public:
     /* getup */
     void getup_front(void);
     void getup_back(void);
+
+    /* poses for preliminary */
+    void fighting_pose(void);
+    void holdup_pose(void);
+    void t_pose(void);
     
     /* for stability */
     void crouch_little(void);
