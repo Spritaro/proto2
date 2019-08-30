@@ -81,9 +81,15 @@ RUN apt-get update && apt-get install -y \
     software-properties-common
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python get-pip.py
-RUN wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v1.10.0/tensorflow-1.10.0-cp27-none-linux_armv7l.whl && \
+# RUN wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v1.10.0/tensorflow-1.10.0-cp27-none-linux_armv7l.whl && \
+#     pip install --ignore-installed enum34 && \
+#     pip install tensorflow-1.10.0-cp27-none-linux_armv7l.whl
+RUN git clone https://github.com/arvind-india/Tensorflow-bin.git && \
+    cd Tensorflow-bin && \
+    rm tensorflow-1.11.0-cp27-cp27mu-linux_armv7l.whl && \
+    mv tensorflow-1.11.0-cp27-cp27mu-linux_armv7l_jemalloc.whl tensorflow-1.11.0-cp27-cp27mu-linux_armv7l.whl && \
     pip install --ignore-installed enum34 && \
-    pip install tensorflow-1.10.0-cp27-none-linux_armv7l.whl
+    pip install tensorflow-1.11.0-cp27-cp27mu-linux_armv7l.whl
 
 ENV MATPLOTLIB_VERSION 2.0.2
 RUN pip install \
@@ -98,7 +104,7 @@ RUN mkdir tensorflow && \
     cd tensorflow && \
     git clone https://github.com/tensorflow/models.git && \
     cd models && \
-    git checkout b07b494e3514553633b132178b4c448f994d59df
+    git checkout 23b5b4227dfa1b23d7c21f0dfaf0951b16671f43
 
 # install COCO API
 WORKDIR /usr/src/tensorflow/models/research

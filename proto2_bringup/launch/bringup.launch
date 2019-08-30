@@ -7,7 +7,7 @@
     <node pkg="joy" type="joy_node" name="joy_node" />
 
     <!-- RealSense -->
-    <!-- <include file="$(find proto2_bringup)/launch/realsense.launch" /> -->
+    <include file="$(find proto2_bringup)/launch/realsense.launch" />
 
     <!-- IMU -->
     <include file="$(find proto2_bringup)/launch/imu.launch" />
@@ -16,6 +16,7 @@
     <node pkg="proto2_base" type="proto2" name="proto2" output="screen" />
 
     <!-- vision -->
-    <node pkg="proto2_vision" type="object_detection_server.py" name="object_detection_server" output="screen" />
+    <node pkg="proto2_vision" type="object_detection_server_tflite.py" name="object_detection_server" output="screen" />
+    <node pkg="proto2_vision" type="strategy_for_preliminary.py" name="strategy_for_preliminary" output="screen" />
 
 </launch>
