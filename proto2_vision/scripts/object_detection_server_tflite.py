@@ -35,7 +35,7 @@ class ObjectDetectionServer(object):
         self.init_model(model_path, label_path)
 
         self.bridge = CvBridge()
-        self.pub = rospy.Publisher('/object_detection/image', Image, queue_size=1)
+        # self.pub = rospy.Publisher('/object_detection/image', Image, queue_size=1)
 
         # Run first inference
         rospy.loginfo("running first inference")
@@ -92,23 +92,26 @@ class ObjectDetectionServer(object):
         detection_scores  = self.interpreter.get_tensor(self.output_details[2]['index'])[0]
         num_detections    = int(self.interpreter.get_tensor(self.output_details[3]['index']))
 
+        rospy.loginfo(detection_classes)
+        rospy.loginfo(detection_scores)
+
         for i in range(num_detections):
             detection_classes[i] += 1
 
-        # Visualization of the results of a detection.
-        rospy.loginfo("visualizing")
-        vis_util.visualize_boxes_and_labels_on_image_array(
-            image_np,
-            detection_boxes,
-            detection_classes,
-            detection_scores,
-            self.category_index,
-            use_normalized_coordinates=True,
-            line_thickness=8,
-            min_score_thresh=.5)
+        # # Visualization of the results of a detection.
+        # rospy.loginfo("visualizing")
+        # vis_util.visualize_boxes_and_labels_on_image_array(
+        #     image_np,
+        #     detection_boxes,
+        #     detection_classes,
+        #     detection_scores,
+        #     self.category_index,
+        #     use_normalized_coordinates=True,
+        #     line_thickness=8,
+        #     min_score_thresh=.5)
 
-        image_msg = self.bridge.cv2_to_imgmsg(image_np, encoding='rgb8')
-        self.pub.publish(image_msg)
+        # image_msg = self.bridge.cv2_to_imgmsg(image_np, encoding='rgb8')
+        # self.pub.publish(image_msg)
 
         # Set result
         object_detection_result = ObjectDetectionResult()
