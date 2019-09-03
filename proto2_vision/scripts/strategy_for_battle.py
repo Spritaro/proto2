@@ -103,10 +103,35 @@ class StrategyForBattle(StrategyForPreliminary):
 
 
     def request_attack(self, angle, dist):
-        pass
+        # turn to enemy direction
+        if angle > 90:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 30)
+        elif angle > 60:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 20)
+        elif angle > 30:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 10)
+        elif angle < -90:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 1,0,0,0, 0,0, 0,0], 30)
+        elif angle < -60:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 1,0,0,0, 0,0, 0,0], 20)
+        elif angle < -30:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 1,0,0,0, 0,0, 0,0], 10)
+        
+        # move to enemy position
+        if dist > 1000:
+            self.send_joy([0.,1., 0.,0., 0.,0.], [0,0,0,0, 0,0,0,0, 0,0, 0,0], 30)
+            return
+        elif dist > 500:
+            self.send_joy([0.,1., 0.,0., 0.,0.], [0,0,0,0, 0,0,0,0, 0,0, 0,0], 20)
+        elif dist > 100:
+            self.send_joy([0.,1., 0.,0., 0.,0.], [0,0,0,0, 0,0,0,0, 0,0, 0,0], 10)
+        
+        # attack
+        if angle >= 0:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,1,0, 0,0,0,0, 0,0, 0,0], 10)
+        else:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [1,0,0,0, 0,0,0,0, 0,0, 0,0], 10)
 
-    def request_approach(self, angle, dist):
-        pass
 
     def request_turn(self):
         self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 10)
