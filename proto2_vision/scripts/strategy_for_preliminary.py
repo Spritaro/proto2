@@ -63,6 +63,9 @@ class StrategyForPreliminary(object):
         rospy.loginfo("waiting for action")
         self.client.wait_for_result()
 
+        # end object detection
+        self.is_busy = False
+
         # parse result
         rects = []
         result = self.client.get_result()
@@ -72,7 +75,7 @@ class StrategyForPreliminary(object):
 
         if len(rects) == 0:
             rospy.loginfo("object not found")
-            return None
+            return None, None
 
         # choose closest object
         depth_img = self.bridge.imgmsg_to_cv2(self.depth_msg, desired_encoding="passthrough")
@@ -97,15 +100,12 @@ class StrategyForPreliminary(object):
 
         rospy.loginfo(closest_rect)
 
-        # end object detection
-        self.is_busy = False
-
-        return closest_rect
+        return closest_rect, closest_dist
 
 
     def spin(self):
         while not rospy.is_shutdown():
-            detected_rect = self.detect_single_object()
+            detected_rect, _ = self.detect_single_object()
 
             if detected_rect == None:
                 rospy.sleep(0.5)
