@@ -58,6 +58,12 @@ void Proto2::whole_control(void)
             while(ros::ok() && motion.joy.buttons[motion.BUTTON_RB] == 1)
                 motion.fighting_pose();
 
+            while(ros::ok() && motion.joy.axes[motion.STICK_LX] < 0)
+                motion.stop_and_look_right();
+
+            while(ros::ok() && motion.joy.axes[motion.STICK_LX] > 0)
+                motion.stop_and_look_left();
+
             continue;
         }
 

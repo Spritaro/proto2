@@ -59,6 +59,8 @@ public:
 
     /* stop */
     void stop(void);
+    void stop_and_look_right(void);
+    void stop_and_look_left(void);
 
     /* variables */
     sensor_msgs::Joy joy;

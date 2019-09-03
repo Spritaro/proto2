@@ -326,6 +326,20 @@ void Motion::stop(void)
     set_and_move_servos(100, poss, degs);
 }
 
+void Motion::stop_and_look_right(void)
+{
+    double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
+    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  -60,0};
+    set_and_move_servos(100, poss, degs);
+}
+
+void Motion::stop_and_look_left(void)
+{
+    double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
+    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  60,0};
+    set_and_move_servos(100, poss, degs);
+}
+
 
 // int main(int argc, char **argv)
 // {
