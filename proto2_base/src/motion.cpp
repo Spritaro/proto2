@@ -204,6 +204,17 @@ void Motion::punch_left(void)
     set_and_move_servos(200, poss, degs2);
 }
 
+void Motion::punch_front(void)
+{
+    double poss[8] = {0.,20.,-230.,0., 0.,-20.,-230.,0.};
+    double degs0[8] = {90.,-100.,90., 90.,-100.,90.,  0,0};
+    set_and_move_servos(100, poss, degs0);
+    double degs1[8] = {90.,-100.,90., 90.,-100.,90.,  0,0};
+    set_and_move_servos(100, poss, degs1);
+    double degs2[8] = {90.,0.,-45., 90.,0.,-45.,  0,0};
+    set_and_move_servos(200, poss, degs2);
+}
+
 /* throw dice */
 void Motion::throw_dice(void)
 {
@@ -322,21 +333,21 @@ void Motion::t_pose(void)
 void Motion::stop(void)
 {
     double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
-    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  0,0};
+    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  0,10};
     set_and_move_servos(100, poss, degs);
 }
 
 void Motion::stop_and_look_right(void)
 {
     double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
-    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  -60,0};
+    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  -60,10};
     set_and_move_servos(100, poss, degs);
 }
 
 void Motion::stop_and_look_left(void)
 {
     double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
-    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  60,0};
+    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  60,10};
     set_and_move_servos(100, poss, degs);
 }
 

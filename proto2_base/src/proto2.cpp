@@ -149,7 +149,8 @@ void Proto2::whole_control(void)
         else if(motion.joy.buttons[motion.BUTTON_Y] == 1)
         {
             /* throw dice */
-            motion.throw_dice();
+            // motion.throw_dice();
+            motion.punch_front();
         }
         else if(motion.joy.buttons[motion.BUTTON_A] == 1)
         {

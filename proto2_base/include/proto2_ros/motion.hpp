@@ -38,6 +38,7 @@ public:
     /* punch */
     void punch_right(void);
     void punch_left(void);
+    void punch_front(void);
 
     /* throw dice (10cm cube) */
     void throw_dice(void);
