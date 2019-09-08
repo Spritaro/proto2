@@ -1,8 +1,8 @@
 #ifndef PROTO2_HPP
 #define PROTO2_HPP
 
-#include "proto2_ros/motion.hpp"
-#include "proto2_ros/vr_control.hpp"
+#include "proto2_base/motion.hpp"
+#include "proto2_base/vr_control.hpp"
 #include <ros/ros.h>
 
 class Proto2

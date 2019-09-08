@@ -1,4 +1,4 @@
-#include "proto2_ros/vr_control.hpp"
+#include "proto2_base/vr_control.hpp"
 #include <geometry_msgs/Quaternion.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <math.h>

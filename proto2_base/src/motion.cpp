@@ -1,4 +1,4 @@
-#include "proto2_ros/motion.hpp"
+#include "proto2_base/motion.hpp"
 
 /* constructor */
 Motion::Motion(ros::NodeHandle n)

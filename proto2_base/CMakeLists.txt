@@ -208,3 +208,6 @@ target_link_libraries(proto2 ${catkin_LIBRARIES} wiringPi)
 
 add_executable(servo_range_check src/servo_range_check.cpp src/pca9685.cpp)
 target_link_libraries(servo_range_check ${catkin_LIBRARIES} wiringPi)
+
+add_executable(joy_republisher src/joy_republisher.cpp)
+target_link_libraries(joy_republisher ${catkin_LIBRARIES})

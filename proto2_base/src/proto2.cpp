@@ -1,4 +1,4 @@
-#include "proto2_ros/proto2.hpp"
+#include "proto2_base/proto2.hpp"
 
 /* constructor */
 Proto2::Proto2(ros::NodeHandle n) :
@@ -25,16 +25,6 @@ void Proto2::whole_control(void)
                 vr_control.enable_vr_control();
 
             else if(motion.joy.buttons[motion.BUTTON_B] == 1)
-                vr_control.disable_vr_control();
-
-            continue;
-        }
-        if(vr_control.vr_joy.axes[vr_control.VR_TRIGGER_HR] > 0.5)
-        {
-            if(vr_control.vr_joy.buttons[vr_control.VR_BUTTON_A] == 1)
-                vr_control.enable_vr_control();
-
-            else if(vr_control.vr_joy.buttons[vr_control.VR_BUTTON_B] == 1)
                 vr_control.disable_vr_control();
 
             continue;

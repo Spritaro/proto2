@@ -5,6 +5,7 @@
 
     <!-- Joy -->
     <node pkg="joy" type="joy_node" name="joy_node" />
+    <node pkg="proto2_base" type="joy_republisher" name="joy_republisher" />
 
     <!-- RealSense -->
     <include file="$(find proto2_bringup)/launch/realsense.launch" />
@@ -16,7 +17,7 @@
     <node pkg="proto2_base" type="proto2" name="proto2" output="screen" />
 
     <!-- vision -->
-    <node pkg="proto2_vision" type="object_detection_server_tflite.py" name="object_detection_server" output="screen" />
+    <!-- <node pkg="proto2_vision" type="object_detection_server_tflite.py" name="object_detection_server" output="screen" /> -->
     <!-- <node pkg="proto2_vision" type="strategy_for_preliminary.py" name="strategy_for_preliminary" output="screen" /> -->
     <!-- <node pkg="proto2_vision" type="strategy_for_battle.py" name="strategy_for_battle" output="screen" /> -->
 

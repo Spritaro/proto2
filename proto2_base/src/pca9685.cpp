@@ -1,4 +1,4 @@
-#include "proto2_ros/pca9685.hpp"
+#include "proto2_base/pca9685.hpp"
 #include <wiringPiI2C.h>
 #include <unistd.h>
 

@@ -40,11 +40,13 @@ public:
     sensor_msgs::Joy vr_joy;
 
     /* index number of gamepad */
-    static const uint8_t VR_BUTTON_B = 0;      // Oculus_CrossPlatform_Button1 1
-    static const uint8_t VR_BUTTON_A = 1;      // Oculus_CrossPlatform_Button2 0
-    static const uint8_t VR_BUTTON_Y = 2;      // Oculus_CrossPlatform_Button3 3
-    static const uint8_t VR_BUTTON_X = 3;      // Oculus_CrossPlatform_Button4 2
-    static const uint8_t VR_BUTTON_NUM = 4;
+    static const uint8_t VR_BUTTON_A = 0;      // Oculus_CrossPlatform_Button2 0
+    static const uint8_t VR_BUTTON_B = 1;      // Oculus_CrossPlatform_Button1 1
+    static const uint8_t VR_BUTTON_X = 2;      // Oculus_CrossPlatform_Button4 2
+    static const uint8_t VR_BUTTON_Y = 3;      // Oculus_CrossPlatform_Button3 3
+    static const uint8_t VR_BUTTON_LS = 4;     // Oculus_CrossPlatform_PrimaryThumbstick
+    static const uint8_t VR_BUTTON_RS = 5;     // Oculus_CrossPlatform_SecondaryThumbstick
+    static const uint8_t VR_BUTTON_NUM = 6;
 
     static const uint8_t VR_TRIGGER_IL = 0;    // Oculus_CrossPlatform_PrimaryIndexTrigger
     static const uint8_t VR_TRIGGER_IR = 1;    // Oculus_CrossPlatform_SecondaryIndexTrigger
