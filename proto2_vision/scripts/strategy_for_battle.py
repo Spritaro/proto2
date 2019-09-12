@@ -41,13 +41,13 @@ class StrategyForBattle(StrategyForPreliminary):
             ### check right ###
             rospy.loginfo("checking right")
             self.request_head_right()
-            if self.check_imu_and_vision(self.head_angle):
+            if self.check_imu_and_vision(-self.head_angle):
                 continue
 
             ### check left
             rospy.loginfo("checking left")
             self.request_head_left()
-            if self.check_imu_and_vision(-self.head_angle):
+            if self.check_imu_and_vision(self.head_angle):
                 continue
 
             ### turn around if no enemy found
@@ -70,7 +70,7 @@ class StrategyForBattle(StrategyForPreliminary):
         if detected_rect != None:
 
             if detected_rect.class_name == "robot":
-                detected_angle = self.color_horizontal_fov * ( (detected_rect.xmin+detected_rect.xmax)/2.0 - 1.0 ) + head_angle_tmp
+                detected_angle = head_angle_tmp - self.color_horizontal_fov * ((detected_rect.xmin+detected_rect.xmax)/2.0 - 0.5)
                 self.request_attack(detected_angle, detected_dist)
                 return True
 
@@ -108,21 +108,21 @@ class StrategyForBattle(StrategyForPreliminary):
     def request_attack(self, angle, dist):
         # turn to enemy direction
         if angle > 90:
-            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 30)
-        elif angle > 60:
-            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 20)
-        elif angle > 30:
-            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 10)
-        elif angle > 10:
-            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 5)
-        elif angle < -90:
             self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 1,0,0,0, 0,0, 0,0], 30)
-        elif angle < -60:
+        elif angle > 60:
             self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 1,0,0,0, 0,0, 0,0], 20)
-        elif angle < -30:
+        elif angle > 30:
             self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 1,0,0,0, 0,0, 0,0], 10)
-        elif angle < -10:
+        elif angle > 10:
             self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 1,0,0,0, 0,0, 0,0], 5)
+        elif angle < -90:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 30)
+        elif angle < -60:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 20)
+        elif angle < -30:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 10)
+        elif angle < -10:
+            self.send_joy([0.,0., 0.,0., 0.,0.], [0,0,0,0, 0,1,0,0, 0,0, 0,0], 5)
         
         # move to enemy position
         if dist == 0:
