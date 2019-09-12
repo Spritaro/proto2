@@ -333,21 +333,21 @@ void Motion::t_pose(void)
 void Motion::stop(void)
 {
     double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
-    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  0,10};
+    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  0,20};
     set_and_move_servos(100, poss, degs);
 }
 
 void Motion::stop_and_look_right(void)
 {
     double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
-    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  -60,10};
+    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  -60,20};
     set_and_move_servos(100, poss, degs);
 }
 
 void Motion::stop_and_look_left(void)
 {
     double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
-    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  60,10};
+    double degs[8] = {0.,-45.,45., 0.,-45.,45.,  60,20};
     set_and_move_servos(100, poss, degs);
 }
 
