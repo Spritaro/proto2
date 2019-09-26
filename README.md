@@ -1,4 +1,5 @@
 # proto2
+<img src=https://user-images.githubusercontent.com/23276379/65700403-99c6eb00-e0ba-11e9-8028-173bc2158d0c.jpg width=320>
 
 ## Overview
 プロト２号は、二足歩行ロボット格闘技大会ROBO-ONEおよびROBO-ONE auto用に製作されたロボットです。ゲームコントローラによる手動制御、物体認識を使った自律制御が可能です。
