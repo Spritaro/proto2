@@ -311,21 +311,21 @@ void Motion::getup_back(void)
 void Motion::fighting_pose(void)
 {
     double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
-    double degs[8] = {60.,-45.,45., 80.,-45.,45.,  0,0};
+    double degs[8] = {60.,-45.,45., 80.,-45.,45.,  0,20};
     set_and_move_servos(100, poss, degs);
 }
 
 void Motion::holdup_pose(void)
 {
     double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
-    double degs[8] = {0.,45.,100., 0.,45.,100.,  0,0};
+    double degs[8] = {0.,45.,100., 0.,45.,100.,  0,20};
     set_and_move_servos(100, poss, degs);
 }
 
 void Motion::t_pose(void)
 {
     double poss[8] = {0.,20.,-250.,0., 0.,-20.,-250.,0.};
-    double degs[8] = {0.,5.,90., 0.,5.,90.,  0,0};
+    double degs[8] = {0.,5.,90., 0.,5.,90.,  0,20};
     set_and_move_servos(100, poss, degs);
 }
 
